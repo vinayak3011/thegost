@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vcoder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Select Subject and Experiment</h1>
+        <div class="selection">
+            <label for="subject">Select Subject:</label>
+            <select id="subject">
+                <option value="">Select Subject</option>
+                <option value="Computer Network">Computer Network</option>
+                <!-- <option value="Software Engineering">Software Engineering</option> -->
+            </select>
+        </div>
+
+        <div class="selection">
+            <label for="experiment">Select Experiment:</label>
+            <select id="experiment">
+                <option value="">Select Experiment</option>
+            </select>
+        </div>
+
+        <div class="resources" id="resources" style="display:none;">
+            <h2 id="experimentTitle"></h2>
+            <pre id="experimentContent"></pre>
+            
+            <!-- New div for references -->
+            <div id="experimentReferences"></div>
+            
+            <!-- Draw.io File Link -->
+            
+            <div style="padding-top: 20px;">
+            <a id="drawioLink" class="buttona" style="color: white;" target="_blank">Download File</a>
+            </div>
+            <!-- Download Button -->
+            <div style="padding-top: 20px;">
+            <button id="downloadButton" style="display:none;">Download as .txt</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
