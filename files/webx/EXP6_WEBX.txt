@@ -1,0 +1,290 @@
+Experiment 6 
+Aim: Create a simple HTML “Hello World” Project using AngularJS Framework and apply 
+ng-controller, ng-model, expression and filters.
+
+steps to perform :
+
+🖥️ Step 1: Setup Environment
+Install a VS Code
+
+step 2: create file in vs code  and paste the below code 
+🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻
+
+
+1.  INDEX.html:
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Form Example</title>
+    <!-- Include AngularJS from CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MainController">
+    <h2>User Form</h2>
+
+    <form name="myForm" ng-submit="submitForm()" novalidate>
+        <label>Name:</label>
+        <input type="text" name="name" ng-model="user.name" required />
+        <br><br>
+        <label>Email:</label>
+        <input type="email" name="email" ng-model="user.email" required />
+        <br><br>
+        <button type="submit">Submit</button>
+        <p style="color: green" ng-if="submitted">Form submitted successfully!</p>
+        <p style="color: red" ng-if="myForm.$submitted && myForm.$invalid">Please fill in the form correctly.</p>
+    </form>
+
+    <!-- Include your script here -->
+    <script>
+    angular.module('myApp', [])
+    .controller('MainController', function($scope, MyService) {
+        $scope.user = {};
+        $scope.submitted = false;
+
+        $scope.submitForm = function() {
+            if ($scope.myForm.$valid) {
+                MyService.submitUserData($scope.user)
+                .then(function(response) {
+                    $scope.submitted = true;
+                    console.log(response.message);
+                })
+                .catch(function(error) {
+                    console.error('Error submitting form:', error.message);
+                });
+            }
+        };
+    })
+    .service('MyService', function($q, $timeout) {
+        this.submitUserData = function(userData) {
+            var deferred = $q.defer();
+            $timeout(function() {
+                console.log('Submitting form data:', userData);
+                deferred.resolve({ message: 'Form submitted successfully!' });
+                // For simulating error, uncomment below:
+                // deferred.reject({ message: 'Error submitting form' });
+            }, 1000);
+            return deferred.promise;
+        };
+    });
+    </script>
+</body>
+</html>
+
+
+2. INDEX.js:
+
+angular.module('myApp', [])
+
+.controller('MainController', function($scope, MyService) {
+    $scope.user = {};
+    $scope.submitted = false;
+
+    $scope.submitForm = function() {
+        if ($scope.myForm.$valid) {
+            // Call a service function to handle form submission
+            MyService.submitUserData($scope.user)
+            .then(function(response) {
+                // Handle success
+                $scope.submitted = true;
+                console.log(response.message);
+            })
+            .catch(function(error) {
+                // Handle error
+                console.error('Error submitting form:', error.message);
+            });
+        }
+    };
+})
+
+.service('MyService', function($q, $timeout) {
+    this.submitUserData = function(userData) {
+        // Simulate an asynchronous HTTP request
+        var deferred = $q.defer();
+
+        $timeout(function() {
+            // Here you would typically make an HTTP POST request
+            console.log('Submitting form data:', userData);
+
+            // Simulating success after 1 second
+            deferred.resolve({ message: 'Form submitted successfully!' });
+
+            // Simulating error for testing
+            // deferred.reject({ message: 'Error submitting form' });
+        }, 1000);
+
+        return deferred.promise;
+    };
+});
+
+
+🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺
+
+step 3: run the code by go live at bottom 
+
+step 4: done.
+
+
+for writing theory:
+
+EXPERIMENT 6 
+Aim: Create a simple HTML “Hello World” Project using AngularJS Framework and apply 
+ng-controller, ng-model, expression and filters. 
+
+Lab Outcome: 
+By the end of this lab, you will be able to: 
+• Understand and use AngularJS directives like ng-app, ng-controller, and ng-model. 
+• Bind data using AngularJS expressions. 
+• Use AngularJS filters to format data. 
+• Develop and run a basic AngularJS application in a browser.
+ 
+Requirement: 
+• Web browser (Chrome, Firefox, etc.) 
+• Basic text editor (VS Code, Notepad++, Sublime Text, etc.) 
+• AngularJS Library (can be linked via CDN) 
+• Basic knowledge of HTML and JavaScript 
+
+Related Theory: 
+
+What is AngularJS? 
+AngularJS is a structural framework for dynamic web applications. It allows you to use 
+HTML as your template language and extend HTML's syntax to express application 
+components clearly and succinctly. Data binding and dependency injection eliminate much of 
+the code you would otherwise have to write. 
+
+Key Concepts: 
+• ng-app: Initializes an AngularJS application. 
+• ng-controller: Defines the application controller, which contains the business logic 
+and data. 
+• ng-model: Binds HTML input elements to application data. 
+• Expressions: Represent dynamic bindings in the view (e.g., {{ name }}). 
+• Filters: Format the value of an expression for display (e.g., uppercase, lowercase, 
+currency, date, etc.). 
+
+Program: 
+
+Output:
+ 
+Conclusion: 
+This lab demonstrates how to create a basic AngularJS application that responds dynamically 
+to user input. By using AngularJS directives like ng-model for two-way data binding, ng
+controller to define logic, and filters to format data, we achieve an interactive and responsive 
+user interface with minimal code. This exercise helps build a foundational understanding of 
+how AngularJS enhances HTML to create dynamic and user-friendly web applications. 
+
+
+📚 Experiment 6 - Viva Preparation Notes
+
+👉 Aim:
+Create a simple "Hello World" style HTML project using AngularJS and apply basic concepts like:
+
+ng-controller
+
+ng-model
+
+Expressions
+
+Filters
+
+
+
+💻 Steps You Performed:
+Installed VS Code (or any code editor you like).
+
+Created an HTML file and pasted the provided code.
+
+Ran the project using the "Go Live" feature at the bottom (Live Server extension in VS Code).
+
+Saw a working form where name and email are submitted, handled by AngularJS!
+
+
+
+🔥 Now, What You Should Know for the Viva:
+
+
+1. What is AngularJS?
+AngularJS is basically a JavaScript framework.
+
+It makes HTML dynamic — meaning, it can react to user inputs immediately without reloading the page.
+
+It introduces cool things like data binding, controllers, and filters that simplify writing big applications.
+
+
+
+2. What is ng-app?
+ng-app tells AngularJS: "Hey! This is where my Angular app starts."
+
+Without ng-app, Angular won't even know to manage your page.
+
+
+
+3. What is ng-controller?
+ng-controller connects a part of your HTML with JavaScript logic (the controller function).
+
+Basically: HTML + brain (controller) = smarter webpage.
+
+In your case, it’s MainController managing the form.
+
+
+
+4. What is ng-model?
+ng-model binds HTML input fields (like textboxes) to JavaScript variables.
+
+It makes a live connection between form fields and your $scope object.
+
+Ex: <input ng-model="user.name"> → $scope.user.name in your JS.
+
+
+5. What are AngularJS Expressions?
+Expressions are those {{ }} double curly braces.
+
+You can show data live inside your HTML using them.
+
+Example: {{ user.name }} will immediately show whatever you typed in the name box.
+
+
+6. What are Filters?
+Filters are used to format how your data looks.
+
+Example filters: uppercase, lowercase, currency, date, etc.
+
+Syntax: {{ user.name | uppercase }}
+
+(In this code, filters aren't directly used, but you should know about them.)
+
+
+
+🧠 Code Flow Explained Simply:
+User opens the page → AngularJS starts because of ng-app="myApp".
+
+User fills the form (name + email).
+
+User clicks Submit:
+
+ng-submit calls submitForm().
+
+submitForm() checks if form is valid (fields filled properly).
+
+If valid → calls a service (MyService.submitUserData()) to simulate sending data.
+
+Service uses $timeout to simulate 1 second delay (like real server communication).
+
+After 1 second:
+
+Either form submission is successful → shows "Form submitted successfully!"
+
+OR if error (if you uncomment reject part), it shows error in console.
+
+
+
+
+⚙️ Components You Used:
+
+Part	Meaning
+angular.module	      Creates an AngularJS app named myApp.
+Controller	      MainController handles form data and submit logic.
+Service	              MyService handles fake form submission using $timeout and $q.
+$scope	              Glue between HTML (view) and JavaScript (controller).
+$q	              AngularJS promise library (to handle async code easily).
+$timeout	      Runs some code after a delay (like setTimeout in JS).

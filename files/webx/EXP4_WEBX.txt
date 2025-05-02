@@ -1,0 +1,263 @@
+EXP 4 Webx
+AIM: Connect MongoDB withNode.js and perform CRUD[Create Read Update Delete] operations.
+
+
+Step 1: 
+- Install Node.js
+  https://nodejs.org/
+
+- Install it
+- Confirm: 
+	open cmd and run 
+	- node -v
+	- npm -v
+
+Step 2:
+- Instal MongoDB [Mongoose]
+	Link: Wisit this URL and Downlaod 
+		https://www.mongodb.com/try/download/community
+
+
+
+
+Step 3: Create a Folder
+Open it in the Vs code Editor
+
+Step 4: Initialize Node.js Project
+- open the Terminal and Run the Command
+	npm init -y
+
+Step 5: install Required Packages
+	npm install mongoose
+
+Step 6: 
+
+In GUI of mongodb
+- Click on Add new connection
+- In url Enter: mongodb://localhost:27017
+- in name: Enter- studentdb
+- click on student database
+
+
+Launch mongodb GUI version OR run the command
+	mongod  	- in terminal
+
+- Connection URL Run
+	mongodb://localhost:27017
+
+Step 7: Create the app.js file
+
+Step 8: Run code
+***************************************8
+const mongoose = require('mongoose');
+
+// 🔗 MongoDB connection string (replace with your own for Atlas)
+const uri = 'mongodb://127.0.0.1:27017/studentdb';
+
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log("✅ Connected to MongoDB"))
+  .catch(err => console.error("❌ Connection error:", err));
+
+// 📄 Define Schema
+const studentSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    department: String
+});
+
+// 📘 Create Model
+const Student = mongoose.model('Student', studentSchema);
+
+// 🧪 CRUD Operations
+
+// ✅ CREATE
+async function createStudent() {
+    const student = new Student({
+        name: 'Alice',
+        age: 22,
+        department: 'Computer Science'
+    });
+    const result = await student.save();
+    console.log("Student Created:", result);
+}
+
+// ✅ READ
+async function readStudents() {
+    const students = await Student.find();
+    console.log("All Students:", students);
+}
+
+// ✅ UPDATE
+async function updateStudent(id) {
+    const student = await Student.findByIdAndUpdate(id, {
+        $set: { age: 23 }
+    }, { new: true });
+    console.log("Updated Student:", student);
+}
+
+// ✅ DELETE
+async function deleteStudent(id) {
+    const result = await Student.findByIdAndDelete(id);
+    console.log("Deleted Student:", result);
+}
+
+// Run operations in sequence
+async function run() {
+    await createStudent();      // Create new student
+    await readStudents();       // Read all students
+    const student = await Student.findOne();  // Get one student
+    if (student) {
+        await updateStudent(student._id);     // Update by ID
+        await deleteStudent(student._id);     // Delete by ID
+    }
+    await readStudents();       // Read remaining students
+}
+
+run();
+
+
+******************************************
+
+Step 7: Run the code using the command
+	node app.js
+
+Step 8: Reload the GUI of mongodb
+you will se the changes
+
+Step9: Done
+
+
+--------------------------------------------------
+✅ 1. Theory
+🔹 What is MongoDB?
+MongoDB is a NoSQL document-oriented database that stores data in flexible, JSON-like documents (BSON). Unlike relational databases, MongoDB doesn't require a predefined schema, making it ideal for modern, scalable applications.
+
+🔹 What is CRUD?
+CRUD refers to the four basic operations used to manage data in a database:
+
+Create: Add a new document/record
+
+Read: Retrieve existing data
+
+Update: Modify existing data
+
+Delete: Remove data
+
+These operations are fundamental for any application that handles persistent data.
+
+🔹 What is Node.js?
+Node.js is a JavaScript runtime built on Chrome's V8 engine. It allows developers to run JavaScript on the server side. Node.js is event-driven and non-blocking, making it ideal for I/O-heavy applications like APIs and real-time apps.
+
+🔹 Why Mongoose?
+Mongoose is an ODM (Object Data Modeling) library for MongoDB and Node.js. It provides a higher-level abstraction over MongoDB, offering:
+
+Schema definitions
+
+Model-based operations
+
+Built-in validation and middleware
+
+Clean syntax and code reusability
+
+🔹 CRUD in Mongoose:
+Mongoose maps MongoDB documents to JavaScript objects and provides built-in methods for CRUD:
+
+Operation	Method
+Create	Model.create() or new Model().save()
+Read	Model.find(), Model.findById()
+Update	Model.findByIdAndUpdate()
+Delete	Model.findByIdAndDelete()
+
+🔹 Real-world Applications:
+User registration/login systems
+
+Product catalog management in eCommerce
+
+Blog post management (add/edit/delete posts)
+
+Inventory systems
+
+Feedback forms or content submissions
+
+✅ 2. Conclusion
+This MongoDB-Node.js CRUD experiment illustrates how backend systems interact with databases to manage data dynamically. The use of Mongoose ODM simplifies the interaction with MongoDB and adds structure to schema-less data.
+
+Key takeaways:
+
+Learned how to connect to MongoDB using Mongoose
+
+Performed CRUD operations with real-time data handling
+
+Understood schema modeling and document manipulation
+
+Gained hands-on experience in backend database logic
+
+This experiment forms a foundation for building full-stack applications and RESTful APIs with MongoDB and Node.js.
+
+✅ 3. Viva Questions and Answers (Detailed)
+📌 Q1. What is the difference between SQL and NoSQL databases?
+Answer:
+
+SQL databases are relational, use structured schemas (tables), and are ideal for structured data.
+
+NoSQL databases like MongoDB are non-relational, schema-less, and store data in JSON-like documents — ideal for unstructured or semi-structured data.
+
+📌 Q2. What is Mongoose and why is it used?
+Answer:
+Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It provides schema validation, query building, and a simple API to interact with MongoDB using JavaScript objects.
+
+📌 Q3. What does Model.create() do in Mongoose?
+Answer:
+Model.create() creates a new document and saves it to the database. It's a shortcut for instantiating a model and calling .save() on it.
+
+📌 Q4. How do you update a document in MongoDB using Mongoose?
+Answer:
+You can use:
+
+js
+Copy
+Edit
+Model.findByIdAndUpdate(id, { $set: { field: value } }, { new: true });
+This finds a document by its _id and updates it with new data.
+
+📌 Q5. What is the difference between find() and findOne()?
+Answer:
+
+find() returns an array of all matching documents.
+
+findOne() returns the first matching document as an object.
+
+📌 Q6. What is _id in MongoDB?
+Answer:
+Every document in MongoDB has a unique _id field automatically generated by MongoDB. It acts as the primary key for document identification.
+
+📌 Q7. What happens if you try to insert a document without all required fields?
+Answer:
+If the schema defines fields as required, Mongoose will throw a validation error if you try to insert a document without those fields.
+
+📌 Q8. How do you delete a document using Mongoose?
+Answer:
+You can use:
+
+js
+Copy
+Edit
+Model.findByIdAndDelete(id);
+It deletes a document by its unique _id.
+
+📌 Q9. What are schemas in Mongoose?
+Answer:
+Schemas define the structure of a document, specifying field names, types, required fields, default values, and validations. Example:
+
+js
+Copy
+Edit
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, required: true }
+});
+📌 Q10. Can you connect MongoDB to Node.js without Mongoose?
+Answer:
+Yes, you can use the official MongoDB native driver. However, Mongoose provides more abstraction, validation, and ease-of-use for managing documents.

@@ -102,6 +102,13 @@ button:hover {
 .resources a:hover {
     text-decoration: underline;
 }
+#experimentContent {
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 20px 0; /* Optional: for better spacing around the content */
+}
+
 
 /* Responsive design */
 @media (max-width: 600px) {

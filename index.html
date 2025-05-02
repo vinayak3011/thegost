@@ -9,39 +9,34 @@
 <body>
     <div class="container">
         <h1>Select Subject and Experiment</h1>
+        
         <div class="selection">
             <label for="subject">Select Subject:</label>
             <select id="subject">
                 <option value="">Select Subject</option>
-                <option value="Computer Network">Computer Network</option>
-                <!-- <option value="Software Engineering">Software Engineering</option> -->
+                <option value="WEBX">WEBX</option>
             </select>
         </div>
 
-        <div class="selection">
+        <div class="selection" id="experimentContainer" style="display: none;">
             <label for="experiment">Select Experiment:</label>
             <select id="experiment">
                 <option value="">Select Experiment</option>
+                <option value="exp2">EXP 2 Perform full fledged code snippets for programs like Calculator using TypeScript.</option>
+                <option value="exp3">EXP 3 Modules in Node.js using File system (CRUD).</option>
+                <option value="exp4">EXP 4 Connect MongoDB with Node.js and perform CRUD operations.</option>
+                <option value="exp5">EXP 5 Create an Express application to implement sessions.</option>
+                <option value="exp6">EXP 6 Create a simple HTML “Hello World” Project using AngularJS Framework.</option>
             </select>
         </div>
-
-        <div class="resources" id="resources" style="display:none;">
-            <h2 id="experimentTitle"></h2>
-            <pre id="experimentContent"></pre>
-            
-            <!-- New div for references -->
-            <div id="experimentReferences"></div>
-            
-            <!-- Draw.io File Link -->
-            
-            <div style="padding-top: 20px;">
-            <a id="drawioLink" class="buttona" style="color: white;" target="_blank">Download File</a>
-            </div>
-            <!-- Download Button -->
-            <div style="padding-top: 20px;">
+        
+        
+        <div style="padding-top: 20px;">
             <button id="downloadButton" style="display:none;">Download as .txt</button>
-            </div>
         </div>
+        <h2 id="experimentTitle"></h2>
+        <pre id="experimentContent"></pre>
+
     </div>
 
     <script src="script.js"></script>

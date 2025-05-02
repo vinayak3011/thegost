@@ -1,0 +1,164 @@
+EXP 5
+AIM: Create an Express application to implement sessions
+
+
+Step 1: 
+- Install Node.js
+  https://nodejs.org/
+
+- Install it
+- Confirm: 
+	open cmd and run 
+	- node -v
+	- npm -v
+
+
+Step 2: Set Up Your Project
+Create A Folder and Open it in the Vs code Editor
+
+Step 3: Open terminal in vs code with the folder you created
+- Run this Command in the Terminal
+	npm init -y
+
+Step 4: Install Required Packages
+	npm install express express-session cookie-parser
+
+Step 5: Create the File app.js
+
+Step 6: Enter this code:
+*******************************
+var express = require('express');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
+var app = express();
+
+app.use(cookieParser());
+
+app.use(session({
+  secret: "Shh, its a secret!",
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.get('/', function(req, res){
+    if(req.session.page_views){
+        req.session.page_views++;
+        res.send("You visited this page " + req.session.page_views + " times");
+    } else {
+        req.session.page_views = 1;
+        res.send("Welcome to this page for the first time!");
+    }
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+
+*******************************
+
+Step 6: Run the Code
+- Run this command in the vscode terminal
+	node app.js
+
+Step 7: Open this url in the Web Browser
+	http://localhost:3000
+
+Step 8: Done
+
+--------------------------------------------------------
+📖 2. Theory
+🔹 What is a Session?
+A session is a temporary state that allows a server to store information about a user across multiple requests. It's commonly used to:
+
+Track logged-in users
+
+Store preferences
+
+Track page visits or cart items
+
+🔹 Why express-session?
+The express-session middleware is used to:
+
+Create and manage sessions in Express.js apps
+
+Store session data on the server
+
+Assign a unique session ID to each user via a cookie
+
+🔹 Why cookie-parser?
+cookie-parser helps Express read cookies sent by the browser. Sessions use cookies to store session IDs.
+
+🔹 Session Workflow:
+Client visits site
+
+Server creates a session and stores it
+
+Session ID sent to client as a cookie
+
+On future visits, client sends the cookie
+
+Server retrieves session data using the ID
+
+🔹 Important Options in express-session:
+Option	Purpose
+secret	Key to sign the session ID cookie
+resave	Forces session to be saved even if not modified
+saveUninitialized	Saves a new session that is unmodified
+
+📌 3. Conclusion
+In this experiment, you built an Express application that demonstrates how session management works using express-session and cookie-parser. Sessions allow you to persist user-specific data like visit count across multiple requests.
+
+You learned:
+
+The role of cookies in session management
+
+How to integrate sessions in Express.js
+
+How user state is preserved using session IDs
+
+This forms a critical foundation for user authentication, login systems, and cart management in web applications.
+
+🎓 4. Viva Questions and Answers
+❓Q1. What is the difference between a cookie and a session?
+Answer:
+
+A cookie stores data on the client side (browser).
+
+A session stores data on the server side and uses a cookie only to store the session ID.
+
+❓Q2. Why do we use cookie-parser in Express?
+Answer:
+cookie-parser is used to parse cookies from incoming HTTP requests so that the session middleware can access the session ID stored in cookies.
+
+❓Q3. What is the use of secret in sessions?
+Answer:
+The secret is used to sign the session ID cookie. It ensures that cookies are not tampered with on the client side.
+
+❓Q4. What does resave: false mean in session configuration?
+Answer:
+resave: false means the session won’t be saved back to the session store if it hasn’t been modified during the request.
+
+❓Q5. What happens when saveUninitialized is set to true?
+Answer:
+When saveUninitialized: true, it will save new but unmodified sessions to the session store. It is useful for setting up login or cart logic.
+
+❓Q6. How is session data stored on the server?
+Answer:
+By default, session data is stored in memory on the server, but in production, it should be stored in databases like Redis, MongoDB, or a file store for persistence.
+
+❓Q7. How are sessions tracked between requests?
+Answer:
+Sessions are tracked by a unique session ID that is stored in a cookie on the client. This ID is used to retrieve session data from the server.
+
+❓Q8. What is a real-world example of session usage?
+Answer:
+A shopping cart in an eCommerce site uses sessions to track items added by the user across different pages before checkout.
+
+❓Q9. Can sessions expire?
+Answer:
+Yes, sessions can be set to expire after a specific time by setting the cookie.maxAge option in express-session.
+
+❓Q10. What happens if a user deletes their cookies?
+Answer:
+If a user deletes cookies, their session ID is lost, and the server cannot identify their session. A new session will be created on the next request.

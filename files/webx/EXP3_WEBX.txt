@@ -1,0 +1,238 @@
+EXP 3 WEBX
+
+AIM: Modules in Node.js using File system (Perform CRUD- [Create Read Update Delete] operations on File systems).
+
+
+Step 1: 
+- Install Node.js
+  https://nodejs.org/
+
+- Install it
+- Confirm: 
+	open cmd and run 
+	- node -v
+	- npm -v
+
+Step 2: Create the project folder and open in the vs code Editor
+
+Step 3: Initialize the Project
+- open the terminal in the vs code 
+	Rune the code
+	npm init -y
+[This creates package.json.]
+
+ Step 3: Create a TypeScript Configuration
+- Rune the command
+	npm install typescript @types/node
+	npx tsc --init
+
+Step 4: Create the file with [name].ts
+
+Step 5: Code-
+***********************
+import * as fs from 'fs';
+import * as readlineSync from 'readline-sync';
+
+const filePath = 'data.txt';
+
+function createFile() {
+    const content = readlineSync.question("Enter content to write: ");
+    fs.writeFileSync(filePath, content);
+    console.log("File created successfully.");
+}
+
+function readFile() {
+    if (!fs.existsSync(filePath)) {
+        console.log("File does not exist.");
+        return;
+    }
+    const content = fs.readFileSync(filePath, 'utf-8');
+    console.log("File content:\n", content);
+}
+
+function updateFile() {
+    if (!fs.existsSync(filePath)) {
+        console.log("File does not exist.");
+        return;
+    }
+    const newContent = readlineSync.question("Enter new content to append: ");
+    fs.appendFileSync(filePath, `\n${newContent}`);
+    console.log("File updated successfully.");
+}
+
+function deleteFile() {
+    if (!fs.existsSync(filePath)) {
+        console.log("File does not exist.");
+        return;
+    }
+    fs.unlinkSync(filePath);
+    console.log("File deleted successfully.");
+}
+
+while (true) {
+    console.log("\n=== File System CRUD Menu ===");
+    console.log("1. Create File");
+    console.log("2. Read File");
+    console.log("3. Update File");
+    console.log("4. Delete File");
+    console.log("0. Exit");
+
+    const choice = readlineSync.questionInt("Choose an option (0-4): ");
+
+    switch (choice) {
+        case 1: createFile(); break;
+        case 2: readFile(); break;
+        case 3: updateFile(); break;
+        case 4: deleteFile(); break;
+        case 0: console.log("Goodbye!"); process.exit(0);
+        default: console.log("Invalid choice. Try again.");
+    }
+}
+
+**************************
+
+Step 6:  Install readline-sync for CLI Input
+- Rune the command in terminal
+	npm install readline-sync @types/readline-sync
+
+Step 7: Compile TypeScript File
+	npx tsc [File_name].ts
+
+Step 8:  Run the Program
+	node [File_name].js
+
+Step 9: Done
+
+-----------------------------------------------
+
+✅ 1. Theory
+🔹 What is CRUD?
+CRUD stands for Create, Read, Update, and Delete — the four basic functions of persistent storage:
+
+Create: Add new data
+
+Read: View or retrieve existing data
+
+Update: Modify existing data
+
+Delete: Remove data from storage
+
+🔹 What is Node.js?
+Node.js is a JavaScript runtime environment that allows JavaScript to run outside the browser. It’s widely used for building backend applications and server-side logic.
+
+🔹 What is the fs module?
+Node.js provides the built-in fs (File System) module to interact with the file system — such as creating, reading, updating, and deleting files on disk.
+
+🔹 Why Perform CRUD with the File System?
+Performing CRUD operations on files simulates how databases work at a low level. It helps understand:
+
+File handling concepts
+
+Data persistence
+
+Error handling
+
+Synchronous vs Asynchronous operations
+
+🔹 Key Concepts Used in the Experiment:
+Concept	Description
+fs.writeFileSync()	Creates or overwrites a file
+fs.readFileSync()	Reads data from a file
+fs.appendFileSync()	Appends data to an existing file
+fs.unlinkSync()	Deletes a file
+fs.existsSync()	Checks if a file exists
+readline-sync	A CLI tool for getting user input
+
+🔹 Application Flow:
+Display a menu with 5 options (Create, Read, Update, Delete, Exit)
+
+Use readline-sync to accept user choices and input
+
+Perform file system operations based on choice using fs module
+
+Handle errors and display appropriate success/failure messages
+
+✅ 2. Conclusion
+The CRUD File System experiment using Node.js demonstrates how to:
+
+Work with the file system using core Node.js modules
+
+Build a menu-driven CLI app
+
+Understand data persistence without a database
+
+Perform error handling effectively
+
+Use synchronous file operations for simplicity in CLI tools
+
+This experiment lays the groundwork for understanding backend logic, file handling, and state management in real applications.
+
+✅ 3. Viva Questions & Answers
+📌 Q1. What does CRUD stand for?
+Answer:
+CRUD stands for:
+
+Create: Adding new data
+
+Read: Retrieving existing data
+
+Update: Modifying data
+
+Delete: Removing data
+
+📌 Q2. What is the fs module in Node.js?
+Answer:
+The fs (File System) module is a built-in Node.js module that allows developers to interact with the file system — creating, reading, updating, and deleting files and directories.
+
+📌 Q3. What is the difference between writeFileSync and appendFileSync?
+Answer:
+
+writeFileSync() overwrites the file with new content.
+
+appendFileSync() adds content to the end of the existing file without overwriting.
+
+📌 Q4. What happens if we try to read or delete a non-existent file?
+Answer:
+An error will be thrown unless we first check for the file using fs.existsSync(). It’s a good practice to verify file existence before reading or deleting it.
+
+📌 Q5. Why is readline-sync used in this program?
+Answer:
+readline-sync allows the program to take user input from the command line synchronously, which is essential for creating interactive CLI-based applications.
+
+📌 Q6. What is the difference between synchronous and asynchronous methods in fs?
+Answer:
+
+Synchronous methods (writeFileSync, etc.) block the execution until the operation completes.
+
+Asynchronous methods (writeFile, etc.) run in the background and use callbacks or promises, allowing non-blocking execution.
+
+📌 Q7. Can you list any 3 methods from the fs module used in this program?
+Answer:
+Yes:
+
+fs.writeFileSync()
+
+fs.readFileSync()
+
+fs.unlinkSync()
+
+📌 Q8. How can we handle errors in file operations?
+Answer:
+Use a try-catch block around file operations to handle unexpected errors (like file not found, permission denied, etc.) gracefully.
+
+📌 Q9. Is this a replacement for a database?
+Answer:
+No. File-based storage is simple and suitable for basic use cases. For larger or multi-user applications, databases (like MongoDB, MySQL) are more efficient and structured.
+
+📌 Q10. What are real-life applications of file system-based CRUD?
+Answer:
+
+Local configuration file editors
+
+Log managers
+
+CLI note-taking tools
+
+Simple backup utilities
+
+Desktop apps like text editors

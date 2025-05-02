@@ -1,0 +1,210 @@
+EXP2 WEBX
+AIM - Perform full fledged code snippets for programs like Calculator using TypeScript.
+
+
+Step 1: 
+- Install Node.js
+  https://nodejs.org/
+
+- Install it
+- Confirm: 
+	open cmd and run 
+	- node -v
+	- npm -v
+
+Step 2:
+- Open CMD in Desktop
+	mkdir typescript-calculator
+	cd typescript-calculator
+
+Recommended : Open this folder in vs code Editor
+and perform future Operation in the vs code Terminal
+
+Step 3: 
+- Initialize npm Project
+	npm init -y
+[This creates a package.json file to manage dependencies.]
+
+Step 4:
+- run this command
+	npm install typescript readline-sync @types/readline-sync
+
+typescript: For TypeScript support
+
+readline-sync: For taking user input in CLI
+
+@types/readline-sync: Type definitions for TypeScript
+
+Step 5:
+- Initialize TypeScript Configuration
+	npx tsc --init
+
+This creates tsconfig.json (TypeScript config file).
+
+Step 6:
+- Create Calculator Program
+	Create a file calculator.ts
+open file in vs code editor or any other editor
+
+Code:
+******************************
+import * as readlineSync from 'readline-sync';
+
+function add(a: number, b: number): number { return a + b; }
+function subtract(a: number, b: number): number { return a - b; }
+function multiply(a: number, b: number): number { return a * b; }
+function divide(a: number, b: number): number {
+    if (b === 0) throw new Error("Division by zero is not allowed.");
+    return a / b;
+}
+
+while (true) {
+    console.log("\n=== TypeScript Calculator ===");
+    console.log("1. Addition");
+    console.log("2. Subtraction");
+    console.log("3. Multiplication");
+    console.log("4. Division");
+    console.log("0. Exit");
+
+    const choice = readlineSync.questionInt("Choose (0-4): ");
+
+    if (choice === 0) {
+        console.log("Goodbye!");
+        break;
+    }
+
+    const num1 = readlineSync.questionFloat("Enter first number: ");
+    const num2 = readlineSync.questionFloat("Enter second number: ");
+
+    try {
+        let result: number;
+        switch (choice) {
+            case 1: result = add(num1, num2); break;
+            case 2: result = subtract(num1, num2); break;
+            case 3: result = multiply(num1, num2); break;
+            case 4: result = divide(num1, num2); break;
+            default: console.log("Invalid choice."); continue;
+        }
+        console.log(`Result: ${result}`);
+    } catch (e) {
+        console.error("Error:", (e as Error).message);
+    }
+}
+
+************************************
+
+Step 7: 
+- Compile the TypeScript Code
+	npx tsc [File_name].ts
+
+This generates a calculator.js file in the same folder.
+
+Step 8:
+- Run the Program
+	node calculator.js
+
+Step 9: done
+
+
+-------------------------------------------------------
+Writing and Viva
+✅ 1. Theory
+🔹 What is TypeScript?
+TypeScript is a strongly typed superset of JavaScript developed by Microsoft. It adds static typing, interfaces, classes, and compile-time error checking, making it easier to write and maintain large-scale JavaScript applications.
+
+🔹 What is a Calculator Program?
+A calculator program performs basic arithmetic operations like:
+
+Addition
+
+Subtraction
+
+Multiplication
+
+Division
+
+The program takes two numbers and an operator, processes the operation, and outputs the result.
+
+🔹 Why Use TypeScript for This?
+Type Safety: Prevents bugs due to incorrect types.
+
+Modular Design: Functions for each operation.
+
+Maintainability: Easier to read, debug, and extend.
+
+🔹 Key Concepts Involved:
+Functions: Modularize each operation (add, subtract, etc.).
+
+Control Flow: switch or if-else statements to handle operations.
+
+Loops: To continuously ask for user input.
+
+CLI Input: Using readline-sync to take input from the user.
+
+Error Handling: try-catch blocks for issues like division by zero.
+
+Type Annotations: TypeScript enforces correct usage like number, string, etc.
+
+✅ 2. Conclusion
+The calculator program built using TypeScript and Node.js demonstrates:
+
+The practical application of modular programming and type safety.
+
+How CLI applications can be made interactive using external packages like readline-sync.
+
+That TypeScript helps catch errors before runtime, leading to more reliable and robust code.
+
+This experiment provides a strong foundation for developing larger CLI-based tools, especially when maintainability and user input are important.
+
+✅ 3. Viva Questions & Answers (with Explanations)
+📌 Q1. What is the difference between TypeScript and JavaScript?
+Answer:
+TypeScript is a superset of JavaScript that adds static typing and compile-time checking. JavaScript is interpreted at runtime and doesn’t check types until the code is run, whereas TypeScript allows developers to catch errors earlier during development.
+
+📌 Q2. What is the purpose of using functions in the calculator program?
+Answer:
+Functions help in breaking down the code into smaller, reusable modules. Each function (add, subtract, etc.) handles a specific operation, making the code easier to read, debug, and extend.
+
+📌 Q3. Why do we use readline-sync in the program?
+Answer:
+readline-sync is used to take user input synchronously from the command line. It simplifies getting inputs for CLI applications without callbacks or promises.
+
+📌 Q4. What does parseFloat() and questionFloat() do?
+Answer:
+
+parseFloat() converts a string input into a floating-point number.
+
+questionFloat() directly reads and parses a float from the user using readline-sync.
+
+📌 Q5. What happens if we divide a number by zero?
+Answer:
+Dividing by zero in the program will throw a custom error using throw new Error("Division by zero is not allowed.");, which is then caught in a try-catch block to prevent crashing the program.
+
+📌 Q6. Why is switch used instead of multiple if-else?
+Answer:
+A switch statement is more efficient and cleaner when checking multiple values against a single variable (in this case, the operation choice). It improves readability and reduces code repetition.
+
+📌 Q7. How does the loop help in this program?
+Answer:
+The loop allows the program to run repeatedly, showing the menu after each operation until the user decides to exit. This mimics real-world calculator behavior.
+
+📌 Q8. What are type annotations in TypeScript?
+Answer:
+Type annotations specify the expected data type of a variable or function argument/return type (e.g., a: number). This helps catch type-related bugs during development.
+
+📌 Q9. What is the benefit of compiling TypeScript to JavaScript?
+Answer:
+TypeScript adds features that browsers or Node.js can’t understand directly, so we compile it to JavaScript using tsc to run it. Compilation also helps catch errors before execution.
+
+📌 Q10. Can this calculator be extended? How?
+Answer:
+Yes. It can be extended by:
+
+Adding more operations (like exponentiation or modulus)
+
+Handling decimals precisely
+
+Building a GUI with frameworks like Angular or React
+
+Saving operation history to a file or database
+
