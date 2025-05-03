@@ -19,6 +19,7 @@ Create A Folder and Open it in the Vs code Editor
 Step 3: Open terminal in vs code with the folder you created
 - Run this Command in the Terminal
 	npm init -y
+[In case of any error while running this command Run this command and try again] ["Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"]
 
 Step 4: Install Required Packages
 	npm install express express-session cookie-parser

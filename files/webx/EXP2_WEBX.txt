@@ -23,6 +23,7 @@ and perform future Operation in the vs code Terminal
 Step 3: 
 - Initialize npm Project
 	npm init -y
+[In case of any error while running this command Run this command and try again] ["Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"]
 [This creates a package.json file to manage dependencies.]
 
 Step 4:

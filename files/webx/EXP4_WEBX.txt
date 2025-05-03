@@ -26,6 +26,8 @@ Open it in the Vs code Editor
 Step 4: Initialize Node.js Project
 - open the Terminal and Run the Command
 	npm init -y
+[In case of any error while running this command Run this command and try again] ["Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"]
+
 
 Step 5: install Required Packages
 	npm install mongoose

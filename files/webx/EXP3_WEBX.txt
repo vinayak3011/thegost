@@ -19,6 +19,8 @@ Step 3: Initialize the Project
 - open the terminal in the vs code 
 	Rune the code
 	npm init -y
+[In case of any error while running this command Run this command and try again] ["Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"]
+
 [This creates package.json.]
 
  Step 3: Create a TypeScript Configuration
