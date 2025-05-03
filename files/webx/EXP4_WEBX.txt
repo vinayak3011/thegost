@@ -50,7 +50,41 @@ Launch mongodb GUI version OR run the command
 Step 7: Create the app.js file
 
 Step 8: Run code
-***************************************8
+***************************************
+Vishaal code 
+mongo wala easy code..............
+
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017/studentdb')
+  .then(() => console.log("Connected"))
+  .catch(console.error);
+
+const Student = mongoose.model('Student', {
+  name: String,
+  age: Number,
+  dept: String
+});
+
+async function crud() {
+  const s = await Student.create({ name: 'Alice', age: 22, dept: 'CS' });
+  console.log("Added:", s);
+
+  const all = await Student.find();
+  console.log("All:", all);
+
+  const upd = await Student.findByIdAndUpdate(s._id, { age: 23 }, { new: true });
+  console.log("Updated:", upd);
+
+  const del = await Student.findByIdAndDelete(s._id);
+  console.log("Deleted:", del);
+
+  mongoose.disconnect();
+}
+
+crud();
+
+**************************************
 const mongoose = require('mongoose');
 
 // 🔗 MongoDB connection string (replace with your own for Atlas)
