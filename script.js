@@ -1,11 +1,15 @@
 const experimentData = {
-    'WEBX': [
-        { title: 'EXP 2 Perform full fledged code snippets for programs like Calculator using TypeScript.', file: 'files/webx/EXP2_WEBX.txt' },
-        { title: 'EXP 3 Modules in Node.js using File system (CRUD).', file: 'files/webx/EXP3_WEBX.txt' },
-        { title: 'EXP 4 Connect MongoDB with Node.js and perform CRUD operations.', file: 'files/webx/EXP4_WEBX.txt' },
-        { title: 'EXP 5 Create an Express application to implement sessions.', file: 'files/webx/EXP5_WEBX.txt' },
-        { title: 'EXP 6 Create a simple HTML “Hello World” Project using AngularJS Framework.', file: 'files/webx/EXP6_WEBX.txt' },
-    ],
+'ICT': [
+    { title: 'EXP 1 Study of OSINT framework.', file: 'files/ict/exp1.txt' },
+    { title: 'EXP 2 Perform Brute Force attack using Burp suite.', file: 'files/ict/exp2.txt' },
+    { title: 'EXP 3 To learn simulation of SQL injection attack.', file: 'files/ict/exp3.txt' },
+    { title: 'EXP 4 Demonstrate cross-site scripting attack.', file: 'files/ict/exp4.txt' },
+    { title: 'EXP 5 Use Metasploit To exploit (Kali Linux)', file: 'files/ict/exp5.txt' },
+    { title: 'EXP 6 Performing a Buffer Overflow attack Using Metasploit', file: 'files/ict/exp6.txt' },
+    { title: 'EXP 7 Use NMap scanner to perform port scanning of various forms – PING SCAN, ACK, SYN, NULL, XMAS', file: 'files/ict/exp7.txt' },
+    { title: 'EXP 8 Study the behavior of protections such as IDF and firewalls when altering headers in network packets.', file: 'files/ict/exp8.txt' },
+    { title: 'EXP 9 Study of steganography tools (Beyond syllabus)', file: 'files/ict/exp9.txt' }
+],
 };
 
 document.getElementById('subject').addEventListener('change', function () {

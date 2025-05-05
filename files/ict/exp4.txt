@@ -1,0 +1,156 @@
+***********exp4 cross-site scripting attack*****************
+
+open kali
+
+open terminal and type "sudo apt install apache2" press y if asked and wait to complete
+		sudo apt install apache2
+
+type "sudo apt install php" press y if asked and wait to complete
+		sudo apt install php
+
+
+type "sudo apt install git" press y if asked and wait to complete
+		sudo apt install git
+
+type "sudo apt install mariadb-server" press y if asked and wait to complete
+		sudo apt install mariadb-server
+
+
+run this command one by one in same terminal
+
+sudo systemctl start apache2
+
+sudo systemctl start mariadb
+
+sudo systemctl enable apache2
+
+sudo systemctl enable mariadb
+
+cd /var/www/html
+
+sudo git clone https://github.com/digininja/DVWA.git
+
+sudo chown -R www-data:www-data /var/www/html/DVWA
+
+sudo chmod -R 755 /var/www/html/DVWA
+
+sudo cp /var/www/html/DVWA/config/config.inc.php.dist /var/www/html/DVWA/config/config.inc.php
+
+type "sudo nano /var/www/html/DVWA/config/config.inc.php" the file will be opened navigate "db_user" chnge the last value to"root" also navigate "db_password" remove the value of that it must be empty (space bhi matt type krna "" aisa dikhna chahiye)
+	sudo nano /var/www/html/DVWA/config/config.inc.php
+
+
+
+sudo systemctl restart apache2
+
+sudo mysql
+
+in MariaDB 
+			CREATE DATABASE dvwa;
+	  	  	GRANT ALL PRIVILEGES ON dvwa.* TO 'root'@'localhost' IDENTIFIED BY '';
+	  	  	FLUSH PRIVILEGES;
+	   	  	EXIT;
+
+after typing exit it will come out of maria db
+
+* type "sudo nano /etc/php/*/apache2/php.ini" the file will be opened, then press ctrl+f and 
+		sudo nano /etc/php/*/apache2/php.ini
+
+
+* type  "display_errors" it will navigate just chnge all the value to "On"(O capital hai). again press ctrl+f 
+		display_errors
+
+
+* type  "display_startup_errors"  chnge all the value to "On"(O capital hai)
+		display_startup_errors
+ 
+
+* open firefox browser in kali search for "http://localhost/DVWA/setup.php" dvwa website will open scroll down click "create/reset database"
+			http://localhost/DVWA/setup.php
+
+
+* then it will redirect u to login page username is "admin" and password is "password".
+* after logging in, in left side there are different tabs chk for DVWA Security tab (4th last) click it.
+* there is one dropbox "impossible" chnge it to "low" click submit (submit dabana bhulna matt mandatory hai).
+* again in left side navigate "XSS(Stored)" page will be loaded with form enter your name in "name" and type "<script>alert('XSS Attack Successful!');</script>" in message n click sign guestbook
+
+a alert message will pop up (matlb exp peform succesfull yeh sir mam ko dikhana hai) 
+
+done
+
+
+
+
+
+
+************THEORY***************
+
+
+4.1 Aim: To demonstrate a Cross-Site Scripting (XSS) attack by injecting malicious scripts
+              into a vulnerable web application.
+
+
+4.2 Lab Outcome: 
+• By the end of this lab, you will:
+• Understand how XSS attacks work.
+• Be able to execute XSS payloads to exploit a web application.
+• Learn how to prevent XSS attacks in real-world applications.
+
+
+1. Objective of the Lab
+	The goal is to simulate a Cross-Site Scripting (XSS) attack in a controlled, ethical environment to understand how XSS vulnerabilities work and how attackers can exploit them in real-world web applications.
+
+
+2. Cross-Site Scripting (XSS) — Overview
+	XSS is a web vulnerability that allows an attacker to inject malicious JavaScript into webpages viewed by other users. When a user views the injected script, the browser executes it as if it were trusted, leading to:
+		Cookie theft
+		Session hijacking
+		Keylogging
+		Fake form injection (phishing)
+		Redirects to malicious sites
+
+3. Types of XSS Attacks Demonstrated
+🔹 Reflected XSS
+	Payload is injected into a URL or form and reflected back immediately.
+	Exploited by sending crafted links to victims.
+
+🔹 Stored XSS
+	Payload is stored in the application (e.g., in a database) and triggered whenever the data is viewed.	
+	More dangerous and persistent.	
+	Common in comment fields, profile sections, message boards.
+
+4. Steps in the Lab
+	Set up LAMP stack on Kali (Apache, MariaDB, PHP).
+	Install and configure DVWA.
+	Create the database and configure credentials in config.inc.php.
+	Access DVWA via browser and set security level to "Low".
+	Navigate to XSS vulnerabilities sections.
+	Inject and observe JavaScript payloads.
+
+5. Security Concepts Involved
+Concept						Explanation
+Input Validation					DVWA lacks proper input sanitization, which allows script injection.
+Output Encoding				Failure to encode user inputs in HTML context leads to execution of raw JavaScript.
+Security Levels					DVWA simulates different levels of protection (low, medium, high) to test XSS resilience.
+Same-Origin Policy (SOP)			XSS exploits trust a browser places in scripts from the same domain.
+
+
+6. Defensive Measures Against XSS
+
+Measure							Description
+Sanitize Input						Strip or escape characters like <, >, ", ', etc.
+Encode Output						Use proper HTML, JavaScript, and URL encoding before rendering user data.
+CSP (Content Security Policy)			Restricts JavaScript sources; mitigates impact of XSS.
+Use Frameworks					Most modern frameworks auto-escape output.
+HTTPOnly Cookies					Prevents access to cookies via JavaScript.
+
+7. Real-World Relevance
+	XSS is one of the OWASP Top 10 web vulnerabilities.
+	Commonly found in forums, CMS, e-commerce platforms, and login pages.
+	Leads to data breaches, account takeovers, and site defacement.
+
+
+8. Legal and Ethical Considerations
+This setup is done in a local lab environment — ethical and legal.
+Attacking systems without permission is illegal and unethical.
+Learning these attacks helps build secure, resilient applications.

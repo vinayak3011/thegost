@@ -1,0 +1,60 @@
+EXP 8
+AIM: Study the behavior of protections such as IDF and firewalls when altering headers 
+in network packets.
+
+Step 1: Open Kali and Wireshark in Kali
+
+Step 2: add the filter in wireshark
+	ip.addr== 10.10.179.150
+
+Step 3: Now wee will use nmap and Observe the Wireshark 
+
+Step 4: Run the command
+	
+1. By Fragmenting the packets with 8 bit data:
+	nmap -sS -Pn -f -F 10.10.179.150
+
+2. Generate ip packets with specific length.
+	nmap -sS -Pn --data-length 64 -F 10.10.179.150
+
+
+3. By manipulating TTL value
+	nmap -sS -Pn --ttl 81 -F 10.10.179.150
+
+4. Send packets with bogus Tcp/Udp checksums.
+	 nmap -sS -Pn --badsum -F 10.10.179.150
+
+
+
+------------------Explation of commands And Steps-------------------------
+1. By Fragmenting the packets with 8 bit data:
+Fragment packets, optionally with given MTU. If the firewall, or the IDS/IPS, does not reassemble the
+packet, it will most likely let it pass. Consequently, the target system will reassemble and process it.
+Command: nmap -sS -Pn -f -F 10.10.179.150
+If you want to limit the IP data to 8 bytes, the 24 bytes of the TCP header will be divided across 3 IP
+packets
+
+
+2. Generate ip packets with specific length.
+In some instances, you might find out that the size of the packets is triggering the firewall or the IDS/IPS
+to detect and block you. If you ever find yourself in such a situation, you can make your port scanning
+more evasive by setting a specific length. You can set the length of data carried within the IP packet using
+--data-length VALUE. Again, remember that the length should be a multiple of 8.
+If you run the following Nmap scan nmap -sS -Pn --data-length 64 -F 10.10.179.150, each TCP segment
+will be padded with random data till its length is 64 bytes. In the screenshot below, we can see that each
+TCP segment has a length of 64 bytes.
+Command: nmap -sS -Pn --data-length 64 -F 10.10.179.150
+
+
+3. By manipulating TTL value
+Nmap gives you further control over the different fields in the IP header. One of the fields you can
+control is the Time-to-Live (TTL). Nmap options include --ttl VALUE to set the TTL to a custom value. This
+option might be useful if you think the default TTL exposes your port scan activities.
+Command: nmap -sS -Pn --ttl 81 -F 10.10.179.150.
+
+
+4. Send packets with bogus Tcp/Udp checksums.
+Asks Nmap to use an invalid TCP, UDP or SCTP checksum for packets sent to target hosts. Since virtually
+all host IP stacks properly drop these packets, any responses received are likely coming from a firewall or
+IDS that didn't bother to verify the checksum
+Command: nmap -sS -Pn --badsum -F 10.10.179.150

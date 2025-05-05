@@ -1,0 +1,145 @@
+
+**************exp7 NMap-PING SCAN,ACK, SYN, NULL, XMAS******************
+
+open kali 
+
+open terminal
+
+type "nmap -sn <target ip>"  (ping scan)
+	nmap -sn 
+	*Used to check if a host is alive (up) without scanning ports.
+	*Does not send SYN packets, only ICMP Echo Requests.
+
+type "nmap -sA <target ip>"  (ACK scan)
+	nmap -sA
+	*Used to bypass firewalls and determine whether a port is filtered or unfiltered.
+	*If a RST (reset) response is received, the port is unfiltered.
+	*If no response, the port is filtered
+
+type "nmap -sS <target ip>"  (SYN scan)
+	nmap -sS
+	*Sends a SYN packet to the target port and waits for a response.
+	*If SYN-ACK is received, the port is open.
+	*If RST (reset) is received, the port is closed.
+	*If there is no response, the port is filtered.
+
+type "nmap -sN <target ip>"  (NULL scan)
+	nmap -sN
+	*Sends a packet with no flags set.
+	*If there is no response, the port is open.
+	*If an RST packet is received, the port is closed.
+
+type "nmap -sX <target ip>"  (XMAS scan)
+	nmap -sX
+	*Sends a packet with FIN, URG, and PUSH flags set (like a Christmas tree).
+	*If there is no response, the port is open.
+	*If an RST packet is received, the port is closed.
+
+
+Type "nmap -sF <target ip>" (FIN Scan)
+	nmap -sF
+
+Type "nmap -sS --scanflags SYNFIN -T4 youtube.com" (A SYN/FIN scan)
+	nmap -sS --scanflags SYNFIN -T4
+
+
+
+
+----------------------Mam ke Codes----------------------
+
+--------------------------------------------------------
+
+
+*****************THEORY***********************
+
+
+1. PING Scan (Host Discovery)
+	Purpose: 
+	To check if a host (target system) is alive (reachable) on the network.
+
+	Working: 
+	Sends ICMP Echo Request, TCP SYN to port 443, or an ARP Request depending on the network.
+	No port scanning is done, only identifies which machines are up.
+	Nmap option: -sn
+
+	Example:
+	nmap -sn 192.168.1.1
+
+	Usage:
+	 Before port scanning, to avoid scanning offline hosts.
+
+2. SYN Scan (Half-open Scan / Stealth Scan)
+	Purpose:
+	To detect open, closed, or filtered ports in a fast and stealthy way.
+	
+	Working:
+	Sends a SYN packet to the target port.
+	If the port is open, target replies with SYN-ACK.
+	Nmap immediately sends RST (Reset) to terminate (not completing 3-way handshake).
+
+	Stealthy: 
+	Because it never fully opens a TCP connection.
+	Nmap option: -sS
+
+	Example:
+	sudo nmap -sS 192.168.1.1
+
+	Usage: 
+	Default and recommended scan type when you have root privileges.
+
+3. ACK Scan
+	Purpose: 
+	Used mainly to map firewall rules and identify filtered vs unfiltered ports.
+
+	Working:
+	Sends an ACK packet (which normally should only be a reply).	
+	If no response or ICMP unreachable comes, port is filtered.	
+	If an RST response comes, port is unfiltered (reachable but maybe closed).
+	Nmap option: -sA
+
+	Example:
+	sudo nmap -sA 192.168.1.1
+
+	Usage: 
+	To check if firewalls are present and how they are configured.
+
+4. NULL Scan
+	Purpose: 
+	To evade simple firewall rules and identify open/closed ports without using standard flags.
+
+	Working:
+	Sends a TCP packet with no flags set (empty flag field).	
+	Behavior depends on the system:
+	Open ports usually do not reply.
+	Closed ports usually send RST.
+	Nmap option: -sN
+
+	Example:
+	sudo nmap -sN 192.168.1.1
+
+	Usage: 
+	Firewall evasion and stealth testing.
+
+	Note: May not work properly on Windows targets because Windows follows TCP RFC differently.
+
+5. XMAS Scan
+	Purpose: 
+	Also used for stealth and firewall evasion.
+
+	Working:
+	Sends a TCP packet with FIN, PSH, and URG flags set — like "lights flashing" (hence "XMAS").	
+	Open ports: No response.
+	Closed ports: RST response.
+	Nmap option: -sX
+
+	Example:
+	sudo nmap -sX 192.168.1.1
+
+
+
+📢 Extra Important Points to Say in Viva:
+		SYN Scan is the most common for normal port scanning.
+		ACK Scan is not for finding open ports, it's for firewall mapping.	
+		NULL and XMAS scans are stealth techniques but can be detected by modern firewalls.
+		Ping Scan is not a port scan, it's a host discovery method.
+

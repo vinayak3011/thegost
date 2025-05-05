@@ -1,0 +1,159 @@
+Exp 9: Study of steganography tools
+
+Step 1: Install Steghide
+On Linux: 
+
+
+sudo apt update
+
+sudo apt install steghide -y
+
+Step 2: Prepare the Files
+Download an imageand save it as "cover.jpg" 
+Create a text file and name it "secret_key.txt"
+
+Step 3: Check the files in Desktop
+
+cd Desktop
+
+ls
+
+Step 4: Embed the Secret Message in cover file
+type       "echo "this is a secret message" > secret_key.txt"
+		echo "this is a secret message" > secret_key.txt
+
+
+type         "steghide embed -cf cover.jpg -ef secret_key.txt"
+		steghide embed -cf cover.jpg -ef secret_key.txt
+enter passphrase:                         
+Re-enter passphrase:
+ try to give pass phrase as "123"
+
+		(-cf cover.jpg: Specifies the cover file.
+		-ef secret.txt: Specifies the secret file to embed.
+		You will be prompted to enter a passphrase (password). Remember this password,	
+		as it is needed to extract the hidden message later.)
+
+Step 5: Verify Whether Data is Embedded
+type          "ls -l"
+
+Step 5: Extract the Hidden Message
+type           "steghide extract -sf cover.jpg"
+			steghide extract -sf cover.jpg
+Enter passphrase:
+		
+		(-sf cover.jpg: Specifies the stego file (image with hidden data).
+		You will be prompted to enter the passphrase used during embedding.)
+
+Step 6: See the extracted message
+cat secret_key.txt
+
+DONE
+
+****************************theory**************************
+
+9.1 Aim: Study of steganography tools (Beyond syllabus) using Steghide
+
+
+9.2 Lab Outcome: 
+• After performing this experiment, students will:
+• Understand the concept of steganography.
+• Learn how to hide and extract secret messages using Steghide.
+• Gain practical experience with a steganography tool in a Linux/Windows
+   environment.
+
+
+
+9.4 Requirement:
+• Steghide tool (install using sudo apt install steghide on Linux).
+• A cover file (image or audio file, e.g., .jpg, .bmp, .wav).
+• A text file containing the secret message to hide.
+• Terminal or Command Prompt access.
+
+
+
+What is Steganography?
+	Steganography is the practice of hiding a secret message inside a non-secret, innocent-looking file (e.g., image, audio, video), in a way that prevents its detection. Unlike cryptography, which scrambles the content of the message, steganography hides the 	existence of the message itself.
+
+What is Steghide?
+	Steghide is an open-source command-line steganography tool that allows you to hide data inside image or audio files. It supports:
+	File formats: .jpg, .bmp, .wav, .au
+	AES-128 encryption for embedded data
+	Compression to reduce payload size
+	Passphrase-based protection
+
+How Steghide Works:
+	Embeds a secret file (e.g., secret.txt) into a cover file (e.g., image.jpg).
+	Uses a password to encrypt the data before hiding.
+	File size and quality are maintained to avoid suspicion.
+	Hidden data can only be retrieved with the correct passphrase.
+
+Applications of Steganography:
+	Secure communication in hostile environments
+	Digital watermarking
+	Malware command and control (used by attackers—also a threat vector)
+	Covert channels in cyberwarfare
+
+Limitations of Steganography:
+	Not immune to steganalysis (forensic detection)
+	Low data capacity compared to cryptography
+	Detectable if file hashes are known or visual anomalies exist
+
+
+
+************Viva Questions****************
+
+Q: What is the difference between cryptography and steganography?
+A: Cryptography encrypts the content of a message to make it unreadable without a key, while steganography hides the existence of the message itself inside a non-suspicious file.
+
+Q: What are the common file formats supported by Steghide?
+A: Steghide supports .jpg, .bmp, .wav, and .au file formats.
+
+Q: Why is a passphrase used in Steghide?
+A: The passphrase is used to encrypt the hidden data using AES-128, ensuring that only someone with the correct passphrase can extract the hidden information.
+
+Q: What type of encryption does Steghide use?
+A: Steghide uses AES-128 (Advanced Encryption Standard with 128-bit key length) for data encryption.
+
+Q: Can you hide multiple files using Steghide?
+A: Not directly. You must first compress multiple files into a single archive (e.g., using zip or tar) and then embed that archive with Steghide.
+
+Q: What happens if you try to extract a hidden message with the wrong passphrase?
+A: Steghide will fail to decrypt and extract the file, usually showing an error like "could not extract any data with that passphrase."
+
+Q: Is the size of the cover file changed after embedding a message?
+A: Usually, the file size appears almost unchanged, as Steghide embeds data without significantly altering the file size or quality.
+
+Q: Can steganography be detected by digital forensics? How?
+A: Yes, through steganalysis techniques like statistical analysis, hash comparison, visual inspection, or specialized tools that detect patterns of hidden data.
+
+Q: What is the role of compression in Steghide?
+A: Steghide compresses the data before embedding to reduce the size of the payload and make it fit more easily into the cover file.
+
+Q: How secure is Steghide compared to modern cryptographic tools?
+A: Steghide adds a layer of obscurity but is not as secure as modern cryptographic tools. It should be used in combination with cryptography for secure communication.
+
+Q: How can steganography be abused in cyberattacks?
+A: Attackers can use steganography to hide malware, command-and-control instructions, or exfiltrate data in seemingly innocent files, making detection harder.
+
+Q: What techniques can be used to detect steganography (steganalysis)?
+A: Techniques include:
+    Visual inspection of image anomalies
+    Comparing file hashes
+    Statistical analysis of pixel values
+    Signature-based detection tools
+
+Q: Why should steganography not be solely relied on for secure communication?
+A: Because once detected, the hidden data can be extracted. It lacks strong authentication, and modern forensic tools can reveal the presence of steganography.
+
+Q: What legal or ethical concerns are associated with steganography?
+A: While it can protect privacy, it can also be misused for illegal activities (e.g., hiding illegal content, secret communication by criminals). Ethical use depends on intent and transparency.
+
+Q: How can you defend against malicious steganographic payloads in enterprise security?
+A: By using:
+    Content filtering
+    File sanitization tools
+    Steganalysis scanners
+    Disabling unnecessary media file transfers in secure environments
+
+

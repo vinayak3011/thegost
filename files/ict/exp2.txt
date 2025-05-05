@@ -1,0 +1,278 @@
+
+Step 1 Download xampp  (paste link in browser)
+
+https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.0.30/xampp-windows-x64-8.0.30-0-VS16-installer.exe
+
+install it fully
+
+open xampp control panel 
+
+enable apache and sql (if sql throws error then check for my sql in pc and uninstall it)
+
+
+
+
+Step 2 setup DVWA on windows
+
+	open C:\xampp\htdocs 
+	open terminal in this folder
+run this command in opened terminal
+	git clone https://github.com/digininja/DVWA.git
+
+
+	after cloning open dvwa folder 
+	go to config folder
+u will see config.inc.php.dist file rename it to 
+	config.inc.php
+
+
+open the renamed file in notepad and search for 
+	$_DVWA[ 'db_user' ] 
+chnge the value to "root"
+search for 
+	$_DVWA[ 'db_password' ]
+change the vale to ""(jo udr likha hai backspace krdo)
+save and close
+
+open C:\xampp\php\php.ini
+search for 
+	allow_url_include 
+	allow_url_fopen 
+	display_errors 
+change the value of all to On  and Make sure the following are enabled (remove ; if present):
+
+
+search for 
+	extension=gd
+	extension=mysqli
+(remove ; if present)
+if not present append in the file
+
+save and close 
+
+open xampp and restart the apache server	
+
+
+
+Step 3 Create the DVWA Database
+
+Open your browser
+
+go to
+	http://localhost/phpmyadmin
+
+Click "New", enter
+	Database name: dvwa
+Click Create
+
+
+
+step 4 
+
+open burpsuite 
+	click next
+	click start burp
+
+go to proxy tab at top navbar
+
+enable intercept
+
+click on open browser in burpsuite 
+
+go to
+	http://localhost/dvwa
+
+click forward button in burp suite till the website loads in browser of burp
+(kuch bhi click kiya na forward pe click krna pdega agge ke steps mein frdwrd click kro mention nhi kruga)
+
+if login page appear 
+	username=admin
+	password=password
+
+Click "Create / Reset Database"
+
+if login page appear 
+	username=admin
+	password=password
+
+u will see the dvwa website
+
+in the left tabs go to the 4th Last tab that is DVWA security
+set the impossible --> low 
+click submit(forward click kroo)
+
+in the left tabs go to brute force tab
+
+login page appear 
+	username=admin
+	password=admin
+(yehi username pass dalnaa)
+
+now in burpsuite in the buttom left u will see somthing like
+
+	GET /dvwa/vulnerabilities/brute/?username=admin&password=admin&Login=Login HTTP/1.1
+	Host: localhost
+	sec-ch-ua: "Chromium";v="135", "Not-A.Brand";v="8"
+	sec-ch-ua-mobile: ?0
+	sec-ch-ua-platform: "Windows"
+	Accept-Language: en-US,en;q=0.9
+ right click on it
+
+send to intruder 
+
+open the intruder tab besides proxy tab
+
+u will again see
+
+	GET /dvwa/vulnerabilities/brute/?username=admin&password=admin&Login=Login HTTP/1.1
+	Host: localhost
+	sec-ch-ua: "Chromium";v="135", "Not-A.Brand";v="8"
+	sec-ch-ua-mobile: ?0
+	sec-ch-ua-platform: "Windows"
+	Accept-Language: en-US,en;q=0.9
+
+
+seletct the value of password that is admin
+
+and click add $ button
+
+
+Step 4 
+
+
+create a password.txt file on desktop of system
+
+conten of file
+	12345
+	admin
+	ghost
+	password
+	system
+sve and close the file
+
+
+
+step 5 
+
+in burpsuite at the right there is vertical nav bar 
+click on payloads tab in it
+
+in payload configuration section click load 
+load the password.txt file on desktop
+
+
+step 6
+
+in same vertical nav bar there is setting tab click on it
+
+scroll down navigate         *Grep match*
+
+click the clear button if prompt appear click yes
+
+after clearing
+
+in the add section paste 
+	Username and/or password incorrect.
+click add
+
+
+click on the start attack button at the top left 
+
+
+doneeeeee
+
+
+
+
+
+
+
+
+**************theory***************
+
+
+
+1. What is a Brute Force Attack?
+	A Brute Force Attack is a trial-and-error method used to decode encrypted data such as passwords or Data Encryption Standard (DES) keys through exhaustive effort (using brute force) rather than employing intellectual strategies.
+	In web applications, brute force attacks are used to guess login credentials by systematically submitting many combinations of usernames and passwords.
+
+2.Burp Suite Overview
+	Burp Suite is a popular web vulnerability scanner and proxy tool used by penetration testers to analyze and attack web applications. Key features include:
+	Intercepting Proxy
+	Intruder (used for brute force)
+	Repeater
+	Scanner (in Pro version)
+
+3.XAMPP Overview
+	XAMPP is a free and open-source cross-platform web server solution stack package developed by Apache Friends, consisting of:
+	X (Cross-platform)
+	Apache (Web Server)
+	MySQL/MariaDB (Database)
+	PHP
+	Perl
+	Used to host DVWA locally for testing.
+
+4. DVWA (Damn Vulnerable Web Application)
+	DVWA is a deliberately insecure web app created for testing vulnerabilities like:
+	SQL Injection
+	XSS
+	CSRF
+	Brute Force
+	File Upload, etc.
+	It allows users to practice ethical hacking in a controlled local environment.
+
+
+********************Viva Questions with Answers*************************
+Q1. What is DVWA and why is it used?
+Ans: DVWA (Damn Vulnerable Web Application) is a PHP/MySQL web application that is vulnerable by design. It is used for testing and practicing various web vulnerabilities in a legal environment.
+
+Q2. What is XAMPP and its components?
+Ans: XAMPP is a free server stack that provides Apache, MySQL, PHP, and Perl. It helps developers run a web server locally to test applications.
+
+Q3. What is a Brute Force Attack?
+Ans: It is a method of trying all possible combinations of passwords or usernames until the correct one is found.
+
+Q4. What is Burp Suite used for?
+Ans: Burp Suite is a tool used in web application security testing. It allows intercepting, modifying, and replaying requests, and has tools like Intruder for attacks like brute force.
+
+Q5. Which module of Burp Suite is used for Brute Force?
+Ans: The Intruder module is used to perform brute force and fuzzing attacks by automating requests with different payloads.
+
+Q6. How can you identify a successful login during a brute force attack?
+Ans: By analyzing the response length, HTTP status code, or response content which differs when login is successful (e.g., redirect to dashboard).
+
+Q7. What are the types of attack modes in Intruder?
+Ans:
+	Sniper – one payload position at a time.
+	Battering Ram – one payload set applied to all positions.
+	Pitchfork – multiple payloads in parallel.
+	Cluster Bomb – multiple payloads combined in all combinations.
+
+Q8. How can you secure a web application from brute force attacks?
+Ans:
+	Rate limiting
+	Account lockout after multiple attempts
+	CAPTCHA
+	Two-factor authentication
+	Strong password policies
+
+Q9. Can Burp Suite be used on live websites?
+Ans: No, unless you have explicit permission. Otherwise, it is considered illegal and unethical.
+
+Q10. What is the default login for DVWA?
+Ans: Username: admin, Password: password
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

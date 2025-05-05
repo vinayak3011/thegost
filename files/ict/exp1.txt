@@ -1,0 +1,96 @@
+Aim: Study of OSINT framework.
+
+WhocallId : 
+https://whocalld.com/
+ 
+Anonymous Instagram Profile Viewer: 
+https://inflact.com/instagram-viewer/
+
+GTD: 
+https://www.start.umd.edu/data-tools/GTD 
+
+Forensic OSINT: 
+https://www.forensicosint.com/kb/Advance-Publications-Reddit-Profile-BC604CAF73DE_lv3
+
+OpenStreetMap: 
+https://www.openstreetmap.org/#map=15/19.01439/72.83820 
+
+
+
+
+
+
+
+******************theory*******************
+
+1.1 Aim: Study of OSINT framework.
+
+1.2 Lab Outcome: Conduct advanced searches to gather intelligence and apply advanced
+		       	   OSINT search techniques and tools.
+
+1.3 Learning Objectives: To get familiar with the OSINT framework and its usage on
+	                             publicly available data.
+
+1.4 Requirement: OSINT framework
+
+
+
+1. WhoCallId – https://whocalld.com/
+	Purpose: Reverse phone lookup tool that identifies unknown callers using global databases.
+	Use Case: Useful in tracing harassment calls, scammer identification, and threat attribution.
+	Forensic Value: Helps in linking call records with real identities during investigation.
+
+2. Anonymous Instagram Profile Viewer (Inflact) – https://inflact.com/instagram-viewer/
+Purpose: 
+	Allows viewing public Instagram profiles anonymously.
+	Use Case: Gathering open-source data on suspects without alerting them.
+	Forensic Value: Helps investigators observe digital behavior patterns or confirm aliases used on social platforms.
+
+3. Global Terrorism Database (GTD) – https://www.start.umd.edu/data-tools/GTD
+Purpose: 
+	A comprehensive open-source database on terrorist events around the world.
+	Use Case: OSINT analysts use GTD to correlate social media threats with real-world data.
+	Forensic Value: Used to support threat assessments and identify connections to historical events.
+
+4. Forensic OSINT (Reddit Profile Viewer) – https://www.forensicosint.com/kb/Advance-Publications-Reddit-Profile-BC604CAF73DE_lv3
+Purpose: 
+	Extracts detailed Reddit profile analytics using hashes or activity patterns.
+	Use Case: Tracing suspects' Reddit activity through usernames or digital footprints.
+	Forensic Value: Useful in doxing investigations, verifying online claims, and threat analysis.
+
+5. OpenStreetMap – https://www.openstreetmap.org
+Purpose: 
+	Open-source mapping platform providing user-contributed geospatial data.
+	Use Case: Geolocation of user-submitted media, incident mapping, or tracking via GPS traces.
+	Forensic Value: Helps correlate a suspect’s online claims with physical location evidence.
+
+
+
+
+************Viva Questions and Answers*****************
+
+
+
+Q1. What is OSINT and why is it important in cyber forensics?
+Ans: OSINT (Open-Source Intelligence) is the collection and analysis of publicly available data for investigative purposes. It is crucial in cyber forensics for tracing digital footprints, confirming suspect identities, and gathering evidence without breaching 	privacy laws.
+
+Q2. How can WhoCallId assist during a phone-based cybercrime investigation?
+Ans: WhoCallId can identify unknown callers by matching numbers with global databases. It helps trace harassment, spoofing, or scam calls back to potential individuals, providing leads for further investigation.
+
+Q3. Is it legal to use anonymous Instagram viewers like Inflact in forensic work?
+Ans: It is legal as long as the data accessed is publicly available and the tool is used for ethical and investigative purposes. Accessing private content without authorization, however, is illegal.
+
+Q4. What kind of data does the Global Terrorism Database (GTD) provide?
+Ans: GTD provides detailed information on global terrorist incidents including dates, locations, weapons used, and group affiliations. It’s used to analyze terrorism trends and cross-verify digital threats.
+
+Q5. What is the forensic advantage of using OpenStreetMap?
+Ans: OpenStreetMap allows investigators to analyze geographic data, such as identifying the location in an image, mapping user check-ins, or reconstructing movement patterns based on digital evidence.
+
+Q6. What does Forensic OSINT’s Reddit profile analyzer reveal?
+Ans: It extracts historical post data, subreddit activity, comment style, and even digital fingerprinting through hashes. This helps confirm the identity of anonymous users or track suspicious behavior.
+
+Q7. How is OSINT different from traditional digital forensics?
+Ans: Traditional forensics involves secured and private data (like hard drives), whereas OSINT deals with publicly accessible information like social media, public records, and web activity.
+
+Q8. What are the limitations of OSINT tools like WhoCallId or Inflact?
+Ans: Limitations include outdated databases, false positives, regional restrictions, or partial data access. Results must be verified with corroborating evidence.
