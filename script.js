@@ -72,20 +72,38 @@ document.getElementById('experiment').addEventListener('change', function () {
                 URL.revokeObjectURL(url);
             };
 
-            // Show Copy Button (if not already added)
-            if (!document.getElementById('copyButton')) {
-                const copyBtn = document.createElement('button');
+            // // Show Copy Button (if not already added)
+            // if (!document.getElementById('copyButton')) {
+            //     const copyBtn = document.createElement('button');
+            //     copyBtn.id = 'copyButton';
+            //     copyBtn.textContent = 'Copy to Clipboard';
+            //     copyBtn.style.marginLeft = '10px';
+            //     copyBtn.onclick = function () {
+            //         navigator.clipboard.writeText(data).then(() => {
+            //             alert('Copied to clipboard!');
+            //         }).catch(err => {
+            //             alert('Failed to copy!');
+            //         });
+            //     };
+            //     downloadButton.parentNode.appendChild(copyBtn);
+            // }
+
+            let copyBtn = document.getElementById('copyButton');
+            if (!copyBtn) {
+                copyBtn = document.createElement('button');
                 copyBtn.id = 'copyButton';
                 copyBtn.textContent = 'Copy to Clipboard';
                 copyBtn.style.marginLeft = '10px';
-                copyBtn.onclick = function () {
-                    navigator.clipboard.writeText(data).then(() => {
-                        alert('Copied to clipboard!');
-                    }).catch(err => {
-                        alert('Failed to copy!');
-                    });
-                };
                 downloadButton.parentNode.appendChild(copyBtn);
             }
+            // Always update the onclick handler
+            copyBtn.onclick = function () {
+                navigator.clipboard.writeText(data).then(() => {
+                    alert('Copied to clipboard!');
+                }).catch(err => {
+                    alert('Failed to copy!');
+                });
+            };
+
         });
 });
