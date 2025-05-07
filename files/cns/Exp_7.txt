@@ -1,0 +1,164 @@
+Exp 7
+Aim: Study of malicious software using different tools: a) Keylogger attack using a keylogger tool. 
+b) Simulate DOS attack using Hping or other tools
+c) Use the NESSUS/ISO Kali Linux tool to scan the network for vulnerabilities
+
+Steps to perform:
+
+A. Keylogger:
+1. In search box, search virus and threat protection
+2. Click on manage settings, under virus and threat protection settings
+3. Turn off real time protection
+4. Now click on the given link to install spyrix: https://spyrix.app/spyrix-free-keylogger
+5. Click on downloads for windows 
+6. Now Install it: Select language → Click Next → Skip email entry → Accept terms → Click Next → Install.
+7. After that, a window might open in chrome and ask to enter email and password, but no need to enter, as spyrix will open shortly after that. Even without entering email and password.
+8. Now perform the experiment by opening a tab and searching something. Spyrix captures screenshots of Windows activity.
+9. After completion, turn on real time protection.
+
+B. DOS attack using Hping:
+1. Install Hping3
+Command:
+sudo apt install hping3
+
+2. First find ip address of your kali vm using 'ifconfig' command. Then enter command:
+sudo hping3 --flood -S -p 80 192.168.10.0
+
+3. Then enter command: 
+top          (can be stopped using q once done)
+
+C. Nessus:
+1. Click on the Nessus download link and install the software. 
+Link: https://www.tenable.com/downloads/nessus?loginAttempted=true
+2. Once the installation is complete, a browser window will open automatically to the localhost website.
+3. Click on “Connect via SSL.”
+4. If you see a “connection not secure” warning, click “Advanced” and then “Proceed.”
+5. Click “Continue”, then choose “Register for Nessus Essentials.”
+6. Enter your details and click “Register.”
+7. You will receive an activation code—take a screenshot just in case (though it’s usually not needed).
+8. Click “Continue”, then create your own username and password. Click “Submit.”
+9. Nessus will now download its plugins. Wait for this process to complete.
+10. Once the main Nessus interface loads, look for a spinning icon at the top of the page—this means additional plugins are still being installed.
+11. Wait until all plugin installations are complete. Only then will you be able to create a new scan.
+
+(Rather than installing nessus if not present, then go to this link and enter my username and password. 
+Link: https://localhost:8834/#/scans/folders/my-scans
+Username - Mitali
+Password - Mitali)
+
+12. Once completed create new scan
+13. Click on web application tests
+14. Enter name eg., Test and in target enter a website eg., google.com
+15. Click on Save. After that click on play icon to launch scanning. 
+16. Once done, generate its report
+
+Done
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🔸 Problem Statement:   (Sample only, write whatever is given by ma'am on slip)
+To study and simulate malicious software behaviors using keylogging, DoS attack, and vulnerability scanning with Spyrix Keylogger, Hping3, and Nessus.
+
+🔸 Lab Outcome:
+- Understand how keyloggers work and how they capture keystrokes/screenshots.
+- Simulate a basic TCP SYN flood DoS attack using hping3.
+- Performe vulnerability scanning using Nessus and generate a report.
+
+🔸 Software Requirements:
+- Windows (for Spyrix Keylogger)
+- Kali Linux (for DoS and Nessus)
+- Spyrix Free Keylogger
+- Hping3
+- Nessus Essentials
+
+🔸 Program:
+🟢 Part A: Keylogger
+A keylogger is a tool that records every key you press on a keyboard. It can capture sensitive information like passwords, credit card numbers, and private messages. While keyloggers are sometimes used for monitoring or in cybersecurity research, they are often used by hackers to steal personal data without the user knowing.
+
+Steps:
+1. Open Virus & Threat Protection → Manage settings → Turn off Real-time protection.
+2. Download Spyrix
+3. Install the tool → Launch the app.
+4. Perform basic tasks (search in browser, type messages, etc.).
+5. Open Spyrix and view logged keystrokes/screenshots.
+6. After the test, re-enable Real-time protection.
+
+🟢 Part B: DoS Attack using Hping3 
+A Denial-of-Service (DoS) attack floods a target system or network with traffic to make it unavailable. hping3 is used to simulate this with SYN flood packets.
+The top command displays real-time information about running processes and system resource usage like CPU and memory.
+
+Commands:
+# Step 1: Install hping3
+sudo apt install hping3
+# Step 2: Find your IP address
+ifconfig
+# Step 3: Launch SYN flood attack (replace with target IP)
+sudo hping3 --flood -S -p 80 192.168.10.0
+# Step 4: Monitor system performance
+top
+
+🟢 Part C: Nessus Vulnerability Scanner 
+Nessus is a network vulnerability scanner that identifies security weaknesses, outdated software, and misconfigurations on a host or network.
+✅ Steps:
+1. Download & install Nessus
+2. Register for Nessus Essentials 
+3. After setup:
+4. Click New Scan → Choose Web Application Tests
+5. Enter scan name (e.g., Test)
+6. Set target IP: 192.168.56.102
+7. Save and click ▶️ to launch the scan
+8. View and generate the vulnerability report.
+
+🔸 Output: (Print. This is not output, rather tells what will be the output)
+Spyrix displayed captured user keystrokes and screenshots.
+Hping3 successfully simulated a TCP SYN flood and system load increased.
+Nessus scanned the target and generated a detailed vulnerability report.
+
+🔸 Conclusion:
+In this experiment, we simulated and analyzed three major types of malicious software behaviors. We used Spyrix Keylogger to understand keystroke capturing, Hping3 to simulate DoS attacks, and Nessus to identify system vulnerabilities. These tools help in recognizing threats and improving cybersecurity awareness.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+###Viva Questions and Answers
+Q1: What is a keylogger?
+A1: A keylogger is a tool that records keystrokes made on a keyboard. It can be used to steal passwords, messages, or other sensitive data.
+
+Q2: Why did we disable real-time protection before using Spyrix?
+A2: Because antivirus software may detect Spyrix as a threat and block its installation or usage.
+
+Q3: What type of data does Spyrix capture?
+A3: Spyrix can capture keystrokes, screenshots, visited websites, and activity logs.
+
+Q4: What is a DoS attack?
+A4: A DoS (Denial of Service) attack floods a server or network with too much traffic, making it slow or unavailable to users.
+
+Q5: What tool did we use to simulate DoS and how?
+A5: We used hping3 to simulate a DoS attack by sending continuous SYN packets using the --flood -S command.
+
+Q6: What does the --flood option do in hping3?
+A6: The --flood option sends packets as fast as possible to flood the target.
+
+Q7: What is the function of the -S flag in hping3?
+A7: The -S flag sends TCP SYN packets to simulate a connection request like in a SYN flood attack.
+
+Q8: Why do we use the top command during the DoS simulation?
+A8: To monitor CPU usage and system load in real time while the attack is running.
+
+Q9: What is Nessus used for?
+A9: Nessus is a vulnerability scanner used to find weaknesses in networks, devices, and applications.
+
+Q10: What is meant by "vulnerability" in cybersecurity?
+A10: A vulnerability is a flaw or weakness in software or a system that can be exploited by attackers.
+
+Q11: What steps are needed before launching a scan in Nessus?
+A11: Install Nessus, register for Essentials, wait for plugin download, then create and run a new scan.
+
+Q12: What kind of scan did we create in Nessus?
+A12: We created a "Web Application Tests" scan to check for website-related vulnerabilities.
+
+Q13: What information does the Nessus report show?
+A13: It shows detected vulnerabilities, their severity levels, affected ports/services, and possible fixes.
+
+Q14: Is it legal to use tools like Spyrix and Hping3?
+A14: They are legal for educational and authorized testing, but illegal if used to harm or spy on others without permission.
+

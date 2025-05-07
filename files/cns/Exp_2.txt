@@ -1,0 +1,75 @@
+Exp 2
+Aim: Study the use of network reconnaissance tools like WHOIS, dig, traceroute, nslookup to gather information about networks and domain registrars.
+
+Steps to perform:
+1. Open kali VM
+2. Run these commands:
+	i. whois facebook.com     #Shows domain registration info like owner, registrar, and expiry.
+	ii. dig facebook.com      #Retrieves DNS records (like IP address) for the domain.
+	iii. traceroute facebook.com   #Displays the path packets take to reach the domain.
+	iv. nslookup facebook.com  #Resolves the domain name to its IP address.
+
+Done
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+🔸Problem Statement: Study the use of network reconnaissance tools like WHOIS, dig, traceroute, nslookup to gather information about networks and domain registrars.
+
+🔸Lab Outcomes:
+Understand how to use basic reconnaissance tools to extract domain and network information.
+Learn how domain lookup and packet tracing helps in ethical hacking and network troubleshooting.
+
+🔸Software Requirements:
+Kali VM 
+WHOIS
+nslookup
+dig
+traceroute
+
+🔸Program:
+whois – Displays domain registration details such as owner, registrar, creation/expiry dates, and contact information.
+dig – Fetches DNS records (like A, MX, NS) of a domain, helping analyze how domain names are translated to IP addresses.
+traceroute – Tracks the route packets take to reach a destination by listing all intermediate network hops along the path.
+nslookup – Resolves a domain name to its IP address and provides DNS server response details for troubleshooting DNS issues.
+
+Commands:
+i. whois facebook.com     
+ii. dig facebook.com      
+iii. traceroute facebook.com   
+iv. nslookup facebook.com 
+
+🔸Output: (print)
+
+🔸Conclusion: 
+In this experiment, understood use of network reconnaissance tools like whois, dig, traceroute and nslookup to gather information about networks and domain registrars. These tools help in identifying network paths, checking DNS configurations, and investigating domain-related information during cybersecurity assessments.
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+###Viva Questions and Answers
+Q1: What is the purpose of the whois command?
+A1: It shows domain registration details like the owner's name, registrar, creation and expiry dates, and contact info.
+
+Q2: What information does the dig command provide?
+A2: It fetches DNS records such as A, MX, and NS, and shows how domain names are translated to IP addresses.
+
+Q3: What does traceroute do?
+A3: It displays the path taken by packets from your system to the destination server, showing each hop on the route.
+
+Q4: What is the function of nslookup?
+A4: It resolves a domain name to its IP address and provides DNS server response details for troubleshooting.
+
+Q5: Why are these tools important in cybersecurity?
+A5: They help gather domain and network information useful for ethical hacking, threat analysis, and troubleshooting.
+
+Q6: What is the main difference between dig and nslookup?
+A6: dig gives detailed DNS records in a more modern format, while nslookup is simpler but more outdated.
+
+Q7: Can whois be used for any website?
+A7: Yes, but some domains may have privacy protection enabled, hiding owner details.
+
+Q8: How does traceroute help in network troubleshooting?
+A8: It helps locate where a network delay or failure occurs by showing the route and time taken at each hop.
+
+Q9: What type of information is retrieved using dig A record?
+A9: The A record maps a domain name to its IPv4 address.
+
+Q10: What is a DNS server?
+A10: A DNS server translates domain names like facebook.com into IP addresses that computers can understand.

@@ -1,0 +1,138 @@
+Exp 3
+Aim: Study of packet sniffer tools Wireshark:- 
+a. Observer performance in promiscuous as well as non-promiscuous mode. 
+b. Show the packets can be traced based on different filters 
+
+Steps to perform:
+A. Promiscuous and Non-Promiscuous Modes:
+1. Open Kali VM and search for Wireshark (it is pre-installed).
+2. Select Network Interface:
+- Typically, select Ethernet if you're using a wired connection. If you are using a wireless network, you may need to select wlan0 or the relevant wireless interface.
+
+#### To Enter Promiscuous Mode:
+1. After selecting the network interface, go to the Wireshark window.
+2. Click on Edit in the top menu bar → Preferences.
+3. In the preferences window, under Capture, check the box for Enable capture packets in promiscuous mode.
+4. Generate Traffic:
+- Open Firefox in your Kali VM and go to testphp.vulnweb.
+- Sign up with random details and click on Signup.
+5. View Packets:
+- Go back to Wireshark. You will see many packets, including HTTP POST packets.
+- Click on a packet, and you will see all the details you entered on the website.
+- In promiscuous mode, Wireshark captures all packets, even those not destined for your device.
+
+#### To Enter Non-Promiscuous Mode:
+1. Click on the Restart icon (top left of Wireshark).
+2. Save your previous capture file if you need it.
+3. Go to Edit → Preferences → Capture.
+4. Uncheck the box for Enable capture packets in promiscuous mode.
+5. Generate Traffic Again:
+- Open Firefox again and generate the same traffic by signing up on the test website.
+6. View Packets:
+- In non-promiscuous mode, you will only see the packets that are specifically destined for or coming from your device.
+
+B. Apply Filters:
+1. Restart Wireshark and save your previous capture file if needed.
+2. Apply Filters:
+- In Wireshark, you can filter packets to narrow down your search.
+Examples of Useful Filters:
+- HTTP Traffic: Type 'http' in the filter bar at the top of the Wireshark window to see only HTTP packets.
+- IPv4 Traffic: Type 'ip' to see only IPv4 packets.
+- TCP Traffic: Type 'tcp' to see only TCP packets.
+- UDP Traffic: Type 'udp' to see only UDP packets.
+- you can even type 'ip.addr == 192.168.2.128' to filter traffic from a specific IP address (put your Kali VM IP)
+
+Done ✅
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🔸Problem Statement: Study of packet sniffer tools Wireshark:- 
+a. Observer performance in promiscuous as well as non-promiscuous mode. 
+b. Show the packets can be traced based on different filters 
+
+🔸Lab Outcome:
+Understanding the fundamental working of Wireshark and how it captures network traffic.
+Gaining hands-on experience with promiscuous and non-promiscuous modes of Wireshark.
+Learning how to filter captured packets using various criteria such as IP addresses, protocols, and ports.
+Comparing the difference in traffic visibility between promiscuous and non-promiscuous modes.
+
+🔸Software Requirements:
+Wireshark: A network packet analyzer that captures and inspects data packets.
+Kali Linux VM: For running Wireshark and generating network traffic.
+Firefox: To generate traffic for capturing during the lab.
+
+🔸Program:
+Wireshark is a free, open-source tool for capturing and analyzing network packets, widely used for troubleshooting and security analysis. It captures data packets transmitted over a network, supports a wide range of protocols.
+Promiscuous mode captures all network traffic, while non-promiscuous mode captures only traffic to/from the device.
+
+Steps:
+A. Promiscuous and Non-Promiscuous Modes:
+1. Open Wireshark in Kali Linux.
+2. Select appropriate network interface (e.g., eth0 or wlan0).
+3. Enable Promiscuous Mode:
+Edit → Preferences → Capture → Enable capture in promiscuous mode.
+4. Start capture and open testphp.vulnweb in Firefox. Fill signup form to generate traffic.
+5. Observe HTTP POST packets in Wireshark (shows captured data from all devices).
+6. Restart capture. Disable Promiscuous Mode:
+Edit → Preferences → Capture → Uncheck promiscuous mode.
+7. Repeat traffic generation. Observe fewer packets (only those to/from your system).
+
+B. Apply Filters in Wireshark
+1. Restart capture if needed.
+2.Use filters in Wireshark filter bar:
+- http → Show only HTTP packets
+- ip → Show only IPv4 traffic
+- tcp → Show only TCP traffic
+- udp → Show only UDP traffic
+- ip.addr == <your_IP> → Show traffic for specific IP
+
+🔸Output: (Print)
+
+🔸Conclusion:
+In this experiment, understood working of wireshark and how it captures network traffic. Learned how to filter captured packets using various criteria. Compared the difference in traffic visibility between promiscuous (for network analysis) and non-promiscuous (specific device network analysis) modes. 
+
+----------------------------------------------------------------------------------------------------------------------------------
+###Viva Questions and Answers
+
+Q1: What is Wireshark?
+A1: Wireshark is a network packet analyzer used to capture and analyze data packets transmitted over a network.
+
+Q2: What is promiscuous mode in Wireshark?
+A2: In promiscuous mode, Wireshark captures all packets on the network, even if they are not meant for your device.
+
+Q3: What is non-promiscuous mode in Wireshark?
+A3: In non-promiscuous mode, Wireshark captures only the packets that are sent to or from your own device.
+
+Q4: How do you enable promiscuous mode in Wireshark?
+A4: Go to Edit → Preferences → Capture → Check “Enable capture in promiscuous mode”.
+
+Q5: Why is promiscuous mode useful?
+A5: It helps in analyzing all network traffic for security monitoring or troubleshooting.
+
+Q6: What type of packets can you capture in Wireshark?
+A6: Wireshark can capture all types of packets including TCP, UDP, HTTP, DNS, ICMP, etc.
+
+Q7: What is the use of filters in Wireshark?
+A7: Filters are used to view only specific types of packets, like HTTP or packets from a particular IP.
+
+Q8: How do you filter HTTP traffic in Wireshark?
+A8: Type http in the filter bar and press Enter.
+
+Q9: How do you filter TCP packets in Wireshark?
+A9: Type tcp in the filter bar to see only TCP packets.
+
+Q10: What is the difference between TCP and UDP?
+A10: TCP is connection-oriented and reliable, while UDP is connectionless and faster but less reliable.
+
+Q11: How can you filter packets from a specific IP address?
+A11: Use the filter ip.addr == <your_IP> in the filter bar.
+
+Q12: What is the default port number of HTTP?
+A12: The default port for HTTP is 80.
+
+Q13: What does a POST request in HTTP mean?
+A13: A POST request is used to send data to a server, like form submissions.
+
+Q14: Is Wireshark active or passive?
+A14: Wireshark is a passive tool—it only captures packets, it doesn’t send or modify them.
+

@@ -1,0 +1,104 @@
+Exp 1
+Aim: Download, install nmap and use it with different options to scan open ports, perform OS fingerprinting, ping scan, tcp port scan, udp port scan, etc. 
+
+🔹 Steps to Perform Nmap Scans in Kali VM:
+1. Install Nmap in Kali VM (if not already installed):
+Command
+sudo apt install nmap
+This installs the Nmap tool on your Kali Linux machine.
+
+2. Open Port Scan:
+Command
+nmap facebook.com
+Performs a default scan on facebook.com to find open TCP ports. It resolves the hostname to an IP and checks standard ports.
+
+3. OS Fingerprinting:
+Command:  sudo nmap -O facebook.com
+Attempts to determine the operating system of the target host. Requires root privileges.
+
+4. Ping Scan:
+First, find your IP address. For Kali, use ifconfig. For Windows, use ipconfig. Example: If Kali VM’s IP is 192.168.2.128, 
+run 
+nmap -sn 192.168.2.0/24
+This checks for all live hosts in the network without scanning their ports.
+
+5. TCP Port Scan:
+Command
+nmap -sT facebook.com
+Performs a full TCP connect scan using the 3-way handshake. Useful when SYN scan (-sS) isn’t available due to lack of privileges.
+
+6. UDP Port Scan:
+Command
+nmap -sU facebook.com
+Scans for services using the UDP protocol. It is slower and may show false negatives due to no response from closed ports.
+
+
+Done ✅
+----------------------------------------------------------------------------------------------------------------------------------
+
+🧾 Problem Statement
+Download and install Nmap, then use various scanning options (open port scan, OS fingerprinting, ping scan, TCP port scan, and UDP port scan) to explore and analyze the state of hosts and services in a network.
+
+🎯 Lab Outcome
+Understand how to use Nmap for different types of network scanning.
+Analyze live hosts, open ports, and the operating system of a target system.
+Recognize the importance of Nmap in network security assessment.
+
+🖥️ Software Requirement
+Kali Linux VM
+Nmap (Network Mapper)
+
+🧪 Program
+Nmap (Network Mapper) is a free and open-source tool used for network discovery and security auditing. It sends packets to target hosts and interprets the responses to detect live systems, open ports, services, and OS types. Nmap is used in both offensive (pen-testing) and defensive (network auditing) roles.
+
+Commands:
+1. sudo apt install nmap
+2. nmap facebook.com
+3. sudo nmap -O facebook.com
+4. nmap -sn 192.168.2.0/24
+5. nmap -sT facebook.com
+6. nmap -sU facebook.com
+
+🖨️ Output (print)
+
+✅ Conclusion
+In this experiment understood how nmap is used for different types of network scanning. Explored its ability to detect live hosts, scan open ports, and identify the operating system of a remote host. Nmap is a powerful network scanning tool used for reconnaissance and security auditing, widely used in both administrative and ethical hacking contexts.
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+###Viva Questions and Answers
+Q1: What is Nmap?
+A1: Nmap (Network Mapper) is a free, open-source tool used to scan networks, discover hosts, and check open ports and services.
+
+Q2: How do you install Nmap in Kali Linux?
+A2: Use the command: sudo apt install nmap.
+
+Q3: What does a basic Nmap scan do?
+A3: It checks for open ports on a target host using default settings.
+
+Q4: What is OS fingerprinting in Nmap?
+A4: It tries to detect the operating system of a host using nmap -O, which requires root access.
+
+Q5: What does nmap -sn do?
+A5: It performs a ping scan to discover live hosts without scanning their ports.
+
+Q6: What is a TCP connect scan?
+A6: Using -sT, it performs a full 3-way handshake to check open TCP ports.
+
+Q7: What is the difference between -sT and -sS scans?
+A7: -sT is a full TCP scan, -sS is a SYN scan (faster, stealthier, needs root).
+
+Q8: What does a UDP scan do?
+A8: Using -sU, it scans for services running over UDP. It’s slower and may give false negatives.
+
+Q9: Why is UDP scanning slower than TCP scanning?
+A9: Because closed UDP ports often don’t respond, making it hard to detect accurately.
+
+Q10: Can Nmap scan an entire network?
+A10: Yes, with a command like nmap -sn 192.168.1.0/24 to find all live hosts in a subnet.
+
+Q11: What is the use of Nmap in cybersecurity?
+A11: It helps find vulnerabilities, map networks, and check exposed services for assessment or attacks.
+
+Q12: Do you need root access for all Nmap scans?
+A12: No, but some scans like OS detection and SYN scan require root privileges.
+

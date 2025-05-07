@@ -1,0 +1,150 @@
+Exp 5
+Aim: Design and implement product cipher using substitution ciphers
+
+Steps to perform:
+1. Install python (if not installed already)
+- Go to this link: https://www.python.org/downloads/
+- Download latest version 3.13.3, once exe file is downloaded, complete its setup
+- Double click on exe file, before clicking on install now, tick the checkbox 'Add python.exe to PATH'
+- Now click on 'Install Now' and complete the setup
+
+2. In VS Code, create new file and select python language. Save it as 'product.py' in Desktop preferably. 
+In VS Code terminal, navigate to desktop using cd command. Example:
+cd Desktop
+
+code:
+import random                          # For generating random key in monoalphabetic cipher
+from string import ascii_lowercase     # List of lowercase English letters
+from typing import Dict                # For type hinting dictionary
+
+# Caesar Cipher Encryption
+def caesar_encrypt(text: str, shift: int) -> str:
+    result = ""
+    for char in text.lower():         # Convert to lowercase
+        if char in ascii_lowercase:   # Encrypt only letters
+            result += chr((ord(char) - 97 + shift) % 26 + 97)  # Caesar shift
+        else:
+            result += char            # Keep non-alphabet characters unchanged
+    return result
+
+# Caesar Cipher Decryption
+def caesar_decrypt(text: str, shift: int) -> str:
+    return caesar_encrypt(text, -shift)  # Reverse Caesar shift
+
+# Generate Monoalphabetic Cipher Key
+def generate_monoalphabetic_key() -> Dict[str, str]:
+    shuffled = list(ascii_lowercase)    # Copy of alphabet
+    random.shuffle(shuffled)            # Shuffle for random mapping
+    return dict(zip(ascii_lowercase, shuffled))  # Create mapping dictionary
+
+# Monoalphabetic Cipher Encryption
+def monoalphabetic_encrypt(text: str, key: Dict[str, str]) -> str:
+    return ''.join([key.get(char, char) for char in text.lower()])  # Replace letters using key
+
+# Monoalphabetic Cipher Decryption
+def monoalphabetic_decrypt(text: str, key: Dict[str, str]) -> str:
+    reverse_key = {v: k for k, v in key.items()}     # Reverse the key mapping
+    return ''.join([reverse_key.get(char, char) for char in text.lower()])  # Replace using reverse key
+
+# --- User Inputs & Setup ---
+plaintext = input("Enter Plain Text: ")         # Get input from user
+
+caesar_key = 3                                   # Caesar cipher shift key
+mono_key = generate_monoalphabetic_key()         # Generate random monoalphabetic key
+
+# --- Encryption Process ---
+caesar_encrypted = caesar_encrypt(plaintext, caesar_key)        # First layer: Caesar encryption
+mono_encrypted = monoalphabetic_encrypt(caesar_encrypted, mono_key)  # Second layer: Monoalphabetic encryption
+
+# --- Decryption Process ---
+mono_decrypted = monoalphabetic_decrypt(mono_encrypted, mono_key)   # First reverse: Monoalphabetic decryption
+caesar_decrypted = caesar_decrypt(mono_decrypted, caesar_key)       # Second reverse: Caesar decryption
+
+# --- Display Results ---
+print(f"\nOriginal Plaintext: {plaintext}")              # Print original message
+print(f"Encrypted Text (after Caesar and Monoalphabetic): {mono_encrypted}")  # Final encrypted output
+print(f"Decrypted Text: {caesar_decrypted}")             # Final decrypted output (should match original)
+
+3. In VS Code terminal, verify once whether python is there or not, by entering 
+i) python --version    (it should give output like this 'Python 3.13.3')
+
+	If it does not, press ctrl+shift+p   
+		- then type 'Python: Select Interpreter' and 
+		- choose 'Python 3.13.x (C:\Users\SMILE\AppData\Local\Programs\Python\Python313\python.exe)'  
+		#this path is just an example, it will be different but will have similar structure.
+		- close VS Code, and again open it, now it should work
+
+ii) Now enter this command in vs code terminal:
+pip install pycryptodome
+
+iii) Now run python file:
+python product.py
+
+Done
+--------------------------------------------------------------------------------------------------------------------------------
+
+🔸Problem Statement: Design and implement product cipher using substitution ciphers
+
+🔸Lab Outcomes:
+Understand the concept of product cipher and substitution techniques.
+Learn how to implement Caesar and Monoalphabetic substitution ciphers.
+Combine two substitution methods to achieve stronger encryption.
+
+🔸Software Requirements:
+VS Code
+Python
+Python libraries: pycryptodome
+
+🔸Program:
+A product cipher enhances security by combining two or more simple ciphers. One common approach is using substitution ciphers, where each letter in the plaintext is replaced according to a fixed rule. Examples include the Caesar cipher, which shifts letters by a fixed number of positions, and the monoalphabetic cipher, which substitutes each letter with a unique letter based on a random key. By combining Caesar and monoalphabetic ciphers, a layered encryption (product cipher) is achieved for stronger security.
+
+ALGORITHM:
+1. Encryption Process:
+	i. Take the plaintext input.
+	ii. Encrypt the text using a Caesar cipher with a fixed shift (e.g., shift of 3).
+	iii. Generate a random monoalphabetic substitution key.
+	iv. Apply the monoalphabetic substitution cipher to the output of the Caesar cipher.
+2. Decryption Process:
+	i. Reverse the monoalphabetic substitution cipher using the reverse of the generated key.
+	ii. Reverse the Caesar cipher by applying the inverse shift.
+	iii. Output the decrypted message.
+
+Program code (if asked then write it)
+
+🔸Output: (Print)
+
+🔸Conclusion:
+In this experiment, we designed and implemented a product cipher using substitution ciphers. We combined Caesar Cipher and Monoalphabetic Cipher to enhance encryption strength through multiple substitution layers. 
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+###Viva Questions and Answers
+Q1: What is a product cipher?
+A1: A product cipher is a combination of two or more ciphers used together to increase the strength of encryption. By layering simple ciphers, it provides more security than a single cipher.
+
+Q2: How does a product cipher work in this experiment?
+A2: In this experiment, we used a product cipher by combining two substitution ciphers: the Caesar Cipher and the Monoalphabetic Cipher. First, the plaintext is encrypted using Caesar Cipher, then the result is encrypted again using the Monoalphabetic Cipher.
+
+Q3: What is the Caesar Cipher?
+A3: The Caesar Cipher is a substitution cipher where each letter of the plaintext is shifted by a fixed number of positions in the alphabet.
+
+Q4: How does the Caesar Cipher encryption work in the code?
+A4: In the Caesar Cipher encryption, each character in the plaintext is shifted by a fixed number (e.g., 3) within the alphabet, with non-alphabet characters left unchanged.
+
+Q5: What is the Monoalphabetic Cipher?
+A5: The Monoalphabetic Cipher is a substitution cipher where each letter in the plaintext is replaced by a unique letter from a shuffled version of the alphabet.
+
+Q6: How is the Monoalphabetic Cipher key generated in the code?
+A6: The Monoalphabetic Cipher key is generated by shuffling the alphabet randomly. The shuffled alphabet is then used to create a mapping between the original alphabet and the shuffled one.
+
+Q7: How does the decryption process work for the product cipher?
+A7: For decryption, the ciphertext is first decrypted using the Monoalphabetic Cipher by reversing the substitution, and then the Caesar Cipher is reversed by shifting in the opposite direction.
+
+Q8: Why is the product cipher more secure than using a single cipher?
+A8: The product cipher is more secure because it uses multiple layers of encryption, making it harder for attackers to break the encryption. Even if one cipher is weak, the second cipher adds an additional layer of security.
+
+Q9: How do you handle non-alphabet characters in the encryption and decryption processes?
+A9: Non-alphabet characters are not altered by the Caesar and Monoalphabetic Ciphers; they are simply added to the result without modification.
+
+Q10: What is the role of random key generation in the Monoalphabetic Cipher?
+A10: The random key generation in the Monoalphabetic Cipher ensures that the substitution is different each time, making the cipher more secure as the same letter can be replaced by different letters in different encryptions.

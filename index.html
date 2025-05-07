@@ -15,7 +15,7 @@
             <label for="subject">Select Subject:</label>
             <select id="subject">
                 <option value="">Select Subject</option>
-                <option value="ICT">ICT</option>
+                <option value="CNS">CNS</option>
             </select>
         </div>
 
@@ -23,21 +23,24 @@
             <label for="experiment">Select Experiment:</label>
             <select id="experiment">
                 <option value="">Select Experiment</option>
-                <option value="exp1">EXP 1 Study of OSINT framework.</option>
-                <option value="exp2">EXP 2 Perform Brute Force attack using Burp suite.</option>
-                <option value="exp3">EXP 3 To learn simulation of SQL injection attack.</option>
-                <option value="exp4">EXP 4 Demonstrate cross-site scripting attack. </option>
-                <option value="exp5">EXP 5 Use Metasploit  To exploit (Kali Linux)</option>
-                <option value="exp6">EXP 6 Performing a Buffer Overflow attack Using Metasploit</option>
-                <option value="exp7">EXP 7 Use NMap scanner to perform port scanning of various forms – PING SCAN,ACK, SYN, NULL, XMAS </option>
-                <option value="exp8">EXP 8 Study the behavior of protections such as IDF and firewalls when altering headers in network packets.</option>
-                <option value="exp9">EXP 9 Study of steganography tools (Beyond syllabus) </option>
+                <option value="exp1">EXP 1 Download, install nmap and use it with different options to scan open ports, perform OS fingerprinting, ping scan, tcp port scan, udp port scan, etc.</option>
+                <option value="exp2">EXP 2 Study the use of network reconnaissance tools like WHOIS, dig, traceroute, nslookup to gather information about networks and domain registrars.</option>
+                <option value="exp3">EXP 3 Study of packet sniffer tools Wireshark: a. Observe performance in promiscuous as well as non-promiscuous mode. b. Show packets can be traced using different filters.</option>
+                <option value="exp4">EXP 4 Breaking the Mono-alphabetic Substitution Cipher using Frequency Analysis Method.</option>
+                <option value="exp5">EXP 5 Design and implement a product cipher using Substitution ciphers.</option>
+                <option value="exp6">EXP 6 Encrypt long messages using various modes of operation using AES or DES.</option>
+                <option value="exp7">EXP 7 Study of malicious software using different tools: a. Keylogger attack using keylogger tool. b. Simulate DoS attack using Hping or other tools. c. Use NESSUS/ISO Kali Linux to scan network for vulnerabilities.</option>
+                <option value="exp8">EXP 8 Study of Network Security: a. Set up IPSec under Linux. b. Set up Snort and study the logs. c. Explore GPG tool to implement email security.</option>
+                <option value="exp9">EXP 9 Content Beyond the Syllabus: a. Burp Suite Tool. b. Steghide Tool.</option>                
             </select>
         </div>
         
         
         <div style="padding-top: 20px;">
             <button id="downloadButton" style="display:none;">Download as .txt</button>
+        </div>
+        <div style="padding-top: 10px;">
+            <button id="downloadAllButton" style="display:none;">CNS EXP 4 Download All Files (.zip)</button>
         </div>
         <h2 id="experimentTitle"></h2>
         <pre id="experimentContent"></pre>

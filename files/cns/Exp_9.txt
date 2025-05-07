@@ -1,0 +1,360 @@
+Exp 9
+Aim: 
+a. Burp Suite Tool: To conduct comprehensive web application security testing, including interception, scanning, and exploitation of vulnerabilities.
+b. Steghide Tool: To learn and apply steganographic techniques for securely hiding and extracting data within digital media files.
+
+Steps to perform:
+🔸 Burp Suite Steps 
+1. Download xampp  (paste link in browser)
+https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.0.30/xampp-windows-x64-8.0.30-0-VS16-installer.exe
+
+install it fully
+- open xampp control panel 
+- Start apache and sql (if sql throws error then check for mysql in pc, if it is there then uninstall it)
+
+2. Setup DVWA on windows
+	- open C:\xampp\htdocs 
+	- open terminal in this folder
+	- run this command in opened terminal
+	git clone https://github.com/digininja/DVWA.git
+
+	- after cloning open dvwa folder 
+	- go to config folder
+	- u will see config.inc.php.dist file rename it to 
+	config.inc.php
+
+	- open the renamed file in notepad and search for   $_DVWA[ 'db_user' ] 
+	- change the value to "root"
+	- search for   $_DVWA[ 'db_password' ]
+	- change the vale to "" (jo udr likha hai backspace krdo)
+	- save and close
+
+3. Open C:\xampp\php\php.ini
+	- search for 
+		allow_url_include 
+		allow_url_fopen 
+		display_errors 
+	- change the value of all to On  and Make sure the following are enabled (remove ; if present)
+	- search for 
+		extension=gd
+		extension=mysqli     (remove ; if present)
+	- if not present append in the file
+	- save and close 
+4. open xampp and restart the apache server	
+5. Create the DVWA Database
+	- Open your browser
+	- go to   http://localhost/phpmyadmin
+	- Click "New", enter
+	- Database name: dvwa  
+	- Click Create
+6. Open burpsuite 
+	- click next, then click start burp
+	- go to proxy tab at top navbar
+	- enable intercept
+	- click on open browser in burpsuite 
+	- go to 	http://localhost/dvwa
+	- click forward button in burp suite till the website loads in browser of burp 
+	(kuch bhi click kiya na forward pe click krna pdega agge ke steps mein frdwrd click kro mention nhi kruga)
+
+7. If login page appear then enter
+	username=admin
+	password=password
+	- Click "Create / Reset Database"
+	- You will see the dvwa website
+	- in the left tabs go to the 4th Last tab that is DVWA security
+	- set the security to low    (originally impossible)
+	- click submit(forward click kroo)
+
+8. In the left tabs go to brute force tab
+	- login page appear 
+	username=admin
+	password=admin
+	(yehi username pass dalnaa)
+	- now in burpsuite in the bottom left u will see something like
+
+	GET /dvwa/vulnerabilities/brute/?username=admin&password=admin&Login=Login HTTP/1.1
+	Host: localhost
+	sec-ch-ua: "Chromium";v="135", "Not-A.Brand";v="8"
+	sec-ch-ua-mobile: ?0
+	sec-ch-ua-platform: "Windows"
+	Accept-Language: en-US,en;q=0.9
+
+ 	- right click on it
+	- send to intruder 
+	- open the intruder tab besides proxy tab
+	- u will again see
+
+	GET /dvwa/vulnerabilities/brute/?username=admin&password=admin&Login=Login HTTP/1.1
+	Host: localhost
+	sec-ch-ua: "Chromium";v="135", "Not-A.Brand";v="8"
+	sec-ch-ua-mobile: ?0
+	sec-ch-ua-platform: "Windows"
+	Accept-Language: en-US,en;q=0.9
+
+	- select the value of password that is admin
+	- and click add $ button 
+
+9. create a password.txt file on desktop of system
+	- content of file:
+	12345
+	admin
+	ghost
+	password
+	system
+	- save and close the file 
+
+10. In burpsuite at the right there is vertical nav bar 
+	- click on payloads tab in it
+	- In payload configuration section click load 
+	- load the password.txt file on desktop
+
+11. In same vertical nav bar there is setting tab click on it
+	- scroll down navigate         *Grep match*
+	- click the clear button if prompt appear click yes
+	- after clearing
+	- in the add section paste 
+	Username and/or password incorrect.
+
+	- click add
+	- click on the start attack button at the top left 
+12. Done ✅
+----------------------------------------------------
+🔸 Steghide Steps 
+1. Download steghide
+   Command:
+   sudo apt install steghide
+
+2. Go to Desktop
+   Command:
+   cd Desktop
+
+3. Download an image using Firefox
+   - Example: Save a hacker.jpeg image to Desktop.
+
+4. Create a secret text file
+   Command:
+   echo "This is execution of steghide in kali linux" > secret_key.txt
+
+5. See the files
+   Command:
+   ls
+
+6. View the contents of the txt file
+   Command:
+   cat secret_key.txt
+
+7. Hide the secret file inside the image
+   Command:
+   steghide embed -cf hacker.jpeg -ef secret_key.txt
+   #cf = cover file (image), ef = embedded file (text)
+
+8. Enter passphrase
+   - Example: pass
+
+9. Check file list again
+   Command:
+   ls -l         
+   #The -l option in ls -l shows a detailed (long) listing of files, including permissions, owner, size, and modification date.
+
+10. Extract the hidden text from image
+    Command:
+    steghide extract -sf hacker.jpeg
+
+11. Read the extracted text
+    Command:
+    cat secret_key.txt
+
+12. Done ✅
+-------------------------------------------------------------------------------------------------------------------------------------------
+🔸 Problem Statement:
+To perform basic security testing using Burp Suite and hide/extract information using Steghide in Kali Linux.
+
+🔸 Lab Outcome:
+- Understood how to intercept HTTP/HTTPS traffic using Burp Suite.
+- Gained hands-on experience in testing a web application for vulnerabilities (e.g., XSS).
+- Learned to hide and extract secret data from images using Steghide.
+
+🔸 Software Requirements:
+- OS: Kali Linux
+- Tools:
+  1. Burp Suite (pre-installed in Kali)
+  2. Steghide (can be installed using terminal)
+  3. Mozilla Firefox
+  4. FoxyProxy Extension for Firefox
+  5. Internet connection (for accessing websites)
+
+🔸 Program:
+
+🟢 Part A: Burp Suite 
+Burp Suite is a web vulnerability scanner and proxy tool that lets us intercept, analyze, and modify traffic between a browser and the server. It is widely used for security testing of web applications.
+
+✅ Key Steps:
+1. Install XAMPP then Start Apache & MySQL.
+2. Set up DVWA:
+	- Clone DVWA into C:\xampp\htdocs.
+	- Rename and edit config file: Set DB user to root, password to empty.
+	- Enable settings in php.ini: allow_url_include, mysqli, etc.
+3. Create Database:
+	- Open http://localhost/phpmyadmin → Create DB named dvwa.
+	- Open Burp Suite → Start Burp → Proxy tab → Open browser.
+	- Visit http://localhost/dvwa.
+	- Forward intercepted requests until DVWA loads.
+4. Login with admin/password → Click Create/Reset Database.
+5. Set Security Level to Low in DVWA settings.
+6. Perform Brute Force Attack:
+	- Go to Brute Force tab in DVWA.
+	- Login with admin/admin.
+	- In Burp → Intercept the request → Send to Intruder.
+	- Mark the password as payload.
+7. Load password.txt (e.g., admin, 12345, etc.).
+8. In Grep Match, add text to identify failure: Username and/or password incorrect.
+9. Click Start Attack.
+
+🟢 Part B: Steghide 
+Steghide is a steganography tool used to hide data inside image or audio files. It uses strong encryption and requires a passphrase to embed/extract the hidden data.
+
+✅ Commands:
+# Install steghide (if not installed)
+sudo apt install steghide
+
+# Move to Desktop
+cd Desktop
+
+# Create a secret file
+echo "This is execution of steghide in kali linux" > secret_key.txt
+
+# Embed secret file into image
+steghide embed -cf hacker.jpeg -ef secret_key.txt
+# Enter passphrase: pass
+
+# Extract the hidden message
+steghide extract -sf hacker.jpeg
+# Enter passphrase: pass
+
+# View extracted file
+cat secret_key.txt
+
+🔸 Output (Print)
+
+🔸 Conclusion:
+In this experiment, we used Burp Suite to test web application security and identify potential vulnerabilities. We also used Steghide to hide and extract data from an image file. This helped us understand basic cybersecurity techniques in ethical hacking and digital forensics.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+###Viva Questions and Answers
+Q1: What is the use of Burp Suite?
+A1: Burp Suite is used to find and exploit vulnerabilities in web applications by intercepting, modifying, and analyzing HTTP/HTTPS requests and responses.
+
+Q2: What is Steghide used for?
+A2: Steghide is a steganography tool that hides or extracts secret data inside media files (like images and audio) using a passphrase.
+
+Q3: What is the purpose of FoxyProxy in Burp Suite testing?
+A3: FoxyProxy manages browser proxy settings so traffic is routed through Burp Suite for interception and analysis.
+
+Q4: Why do we import the Burp Suite certificate in Firefox?
+A4: To prevent HTTPS warnings and allow Firefox to trust Burp Suite for intercepting secure (SSL/TLS) traffic.
+
+Q5: What is Intercept in Burp Suite?
+A5: Intercept pauses browser requests so the tester can view or modify them before sending to the server.
+
+Q6: What is Repeater in Burp Suite?
+A6: Repeater allows sending customized requests multiple times to test server responses manually.
+
+Q7: What happens if you replace a search input with <script>alert('xss')</script>?
+A7: It tests for XSS. If the alert runs or there’s a server error, it may indicate a vulnerability.
+
+Q8: What does steghide embed -cf hacker.jpeg -ef secret_key.txt do?
+A8: It hides the contents of secret_key.txt inside the image hacker.jpeg using a passphrase.
+
+Q9: What is a passphrase in Steghide?
+A9: It’s a password that protects hidden data and is needed for both embedding and extracting.
+
+Q10: How do you extract hidden data using Steghide?
+A10: Use steghide extract -sf hacker.jpeg and provide the correct passphrase when prompted.
+
+Q11: Why is Burp Suite better than browser developer tools?
+A11: It provides advanced features like request interception, vulnerability scanning, and request manipulation.
+
+Q12: Can Steghide be used for audio files too?
+A12: Yes, it supports formats like WAV and AU in addition to JPEG and BMP images.
+
+Q13: What is the role of a proxy in web security testing?
+A13: A proxy intercepts traffic between the browser and server, allowing testers to inspect and modify it.
+
+Q14: Why is it important to test for XSS?
+A14: Because XSS can allow attackers to steal data, hijack sessions, or perform malicious actions in the user’s browser.
+
+Q15: What is the difference between Steghide and encryption?
+A15: Encryption hides content using algorithms, while Steghide hides the presence of data inside a file.
+
+----------------------------------------------------------------------------------------------------------------------
+(This we dont have to perform!!!)
+1. Open Burp Suite
+   - In Kali, it's already installed.
+
+2. Accept terms
+   - Click "Next", then "Start Burp" to create temporary project.
+
+3. Turn on Intercept
+   - Go to Proxy tab > click "Intercept is on".
+
+4. Open Firefox and install FoxyProxy
+   - URL: https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/
+
+5. Pin FoxyProxy to toolbar
+   - Click extension icon > Settings > Pin to toolbar.
+
+6. Set up FoxyProxy
+   - Click FoxyProxy icon > Options > Proxies > Add
+   - Title: burpsuite
+   - Hostname: 127.0.0.1
+   - Port: 8080
+   - Type: HTTP
+   - Click Save
+
+7. Set manual proxy in Firefox
+   - Go to Firefox Settings > Scroll to Network Settings > Click Settings
+   - Set:
+     HTTP Proxy: 127.0.0.1
+     Port: 8080
+   - Click OK
+
+8. Turn on FoxyProxy
+   - Select the burpsuite proxy from the icon.
+
+9. Visit this URL in Firefox:
+   http://burpsuite
+
+10. Download CA Certificate
+    - Click on the CA Certificate link, it downloads a .der file.
+
+11. Import CA certificate into Firefox
+    - Go to Firefox Settings > Search "cert" > Click View Certificates
+    - Click Import, select the .der file
+    - Tick both boxes, click OK
+
+12. Import the certificate into Burp Suite
+    - In Burp, go to:
+      Proxy > Proxy Settings > Import/Export CA Cert
+    - Choose:
+      Import > Certificate in DER format > Select file > Save > Next > Close
+
+13. Start Intercepting HTTPS
+    - Turn OFF FoxyProxy
+    - Open a new tab in Firefox, visit:
+      https://flipkart.com/
+    - Let it load. Then, turn ON FoxyProxy
+    - Search something like: cmf phone
+
+14. Capture GET request
+    - In Burp, go to intercept, you will see a GET request of flipkart
+    - Right-click the search request > Send to Repeater
+
+15. Test for XSS vulnerability
+    - Go to Repeater tab
+    - In the URL, you will see 'search?q=cmf%20phone' so replace `cmf%20phone` with:
+      <script>alert('xss')</script>
+    - Click Send
+    - If response shows:
+      500 Internal Server Error
+      => Website may be vulnerable due to input validation or sanitization. Thus resulting in this error

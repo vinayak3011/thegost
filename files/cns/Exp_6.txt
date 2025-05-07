@@ -1,0 +1,266 @@
+Exp 6
+Aim: Encrypt long messages using various modes of operation using AES or DES
+
+Steps to perform:
+1. Install python (if not installed already)
+- Go to this link: https://www.python.org/downloads/
+- Download latest version 3.13.3, once exe file is downloaded, complete its setup
+- Double click on exe file, before clicking on install now, tick the checkbox 'Add python.exe to PATH'
+- Now click on 'Install Now' and complete the setup
+
+2. In VS Code, create new file and select python language. 
+- For AES, copy and paste below code. Save it as 'aes.py' in desktop.
+In VS Code terminal, navigate to desktop using cd command. Example:   cd Desktop
+
+###If asked to show only one mode then comment out rest modes, if told to show all modes then only keep this code as it is.
+
+Code:
+from Crypto.Cipher import AES                  # AES encryption/decryption
+from Crypto.Random import get_random_bytes     # To generate random key, IV, nonce
+from Crypto.Util.Padding import pad, unpad     # For padding (needed in ECB, CBC)
+import base64                                  # To print encrypted text in readable format
+
+# Message to encrypt (in bytes)
+message = b"This is a long message that needs to be encrypted using AES with various modes of operation to demonstrate the effect of each mode clearly."
+
+# AES-128 key (16 bytes)
+key = get_random_bytes(16)
+
+# AES block size (16 bytes)
+BLOCK_SIZE = AES.block_size
+
+# Function to encrypt and decrypt using given AES mode
+def encrypt_decrypt(mode_name, cipher_mode, needs_iv=True, needs_nonce=False):
+    print(f"\n--- {mode_name} Mode ---")  # Show mode being used
+
+    # Generate IV (for CBC, CFB, OFB) or nonce (for CTR)
+    if needs_nonce:
+        nonce = get_random_bytes(8)                     # Short nonce for CTR
+        print("Nonce (base64):", base64.b64encode(nonce).decode())
+        cipher = AES.new(key, cipher_mode, nonce=nonce)  # Create cipher with nonce
+    elif needs_iv:
+        iv = get_random_bytes(BLOCK_SIZE)
+        print("IV (base64):", base64.b64encode(iv).decode())
+        cipher = AES.new(key, cipher_mode, iv=iv)        # Create cipher with IV
+    else:
+        cipher = AES.new(key, cipher_mode)               # ECB (no IV or nonce)
+
+    # Encrypt the message
+    if cipher_mode in [AES.MODE_ECB, AES.MODE_CBC]:
+        ciphertext = cipher.encrypt(pad(message, BLOCK_SIZE))  # Pad for ECB, CBC
+    else:
+        ciphertext = cipher.encrypt(message)                   # No padding for others
+
+    print("Ciphertext (base64):", base64.b64encode(ciphertext).decode())
+
+    # Decryption setup
+    if needs_nonce:
+        decipher = AES.new(key, cipher_mode, nonce=nonce)      # Reuse nonce for decryption
+    elif needs_iv:
+        decipher = AES.new(key, cipher_mode, iv=iv)            # Reuse IV for decryption
+    else:
+        decipher = AES.new(key, cipher_mode)                   # ECB
+
+    # Decrypt the ciphertext
+    if cipher_mode in [AES.MODE_ECB, AES.MODE_CBC]:
+        decrypted = unpad(decipher.decrypt(ciphertext), BLOCK_SIZE)
+    else:
+        decrypted = decipher.decrypt(ciphertext)
+
+    print("Decrypted:", decrypted.decode())
+
+# Run AES in different modes
+encrypt_decrypt("ECB", AES.MODE_ECB, needs_iv=False)           # ECB: no IV, needs padding
+encrypt_decrypt("CBC", AES.MODE_CBC)                           # CBC: IV + padding
+encrypt_decrypt("CFB", AES.MODE_CFB)                           # CFB: IV, no padding
+encrypt_decrypt("OFB", AES.MODE_OFB)                           # OFB: IV, no padding
+encrypt_decrypt("CTR", AES.MODE_CTR, needs_iv=False, needs_nonce=True)  # CTR: uses nonce, no padding
+
+
+- For DES, copy and paste below code. Save it as 'des.py' in desktop.
+In VS Code terminal, navigate to desktop using cd command. Example:   cd Desktop
+
+###If asked to show only one mode then comment out rest modes, if told to show all modes then only keep this code as it is.
+
+Code:
+from Crypto.Cipher import DES                   # DES encryption/decryption
+from Crypto.Random import get_random_bytes      # To generate random key and IV
+from Crypto.Util.Padding import pad, unpad      # For padding
+import base64                                   # To print encrypted text in readable format
+
+# Message to encrypt (in bytes)
+message = b"This is a long message that needs to be encrypted using DES with various modes of operation to demonstrate the effect of each mode clearly."
+
+# DES key must be 8 bytes
+key = get_random_bytes(8)
+
+# DES block size (8 bytes)
+BLOCK_SIZE = DES.block_size
+
+# Function to encrypt and decrypt using given DES mode
+def encrypt_decrypt(mode_name, cipher_mode, needs_iv=True):
+    print(f"\n--- {mode_name} Mode ---")  # Show mode being used
+
+    # Generate IV if needed (CBC, CFB, OFB)
+    if needs_iv:
+        iv = get_random_bytes(BLOCK_SIZE)
+        print("IV (base64):", base64.b64encode(iv).decode())
+        cipher = DES.new(key, cipher_mode, iv=iv)         # Create cipher with IV
+    else:
+        cipher = DES.new(key, cipher_mode)                # ECB (no IV)
+
+    # Encrypt the message
+    if cipher_mode in [DES.MODE_ECB, DES.MODE_CBC]:
+        ciphertext = cipher.encrypt(pad(message, BLOCK_SIZE))  # Pad for ECB, CBC
+    else:
+        ciphertext = cipher.encrypt(message)                   # No padding for others
+
+    print("Ciphertext (base64):", base64.b64encode(ciphertext).decode())
+
+    # Decryption setup
+    if needs_iv:
+        decipher = DES.new(key, cipher_mode, iv=iv)       # Reuse IV
+    else:
+        decipher = DES.new(key, cipher_mode)              # ECB
+
+    # Decrypt the ciphertext
+    if cipher_mode in [DES.MODE_ECB, DES.MODE_CBC]:
+        decrypted = unpad(decipher.decrypt(ciphertext), BLOCK_SIZE)
+    else:
+        decrypted = decipher.decrypt(ciphertext)
+
+    print("Decrypted:", decrypted.decode())
+
+# Run DES in different modes
+encrypt_decrypt("ECB", DES.MODE_ECB, needs_iv=False)        # ECB: no IV, needs padding
+encrypt_decrypt("CBC", DES.MODE_CBC)                        # CBC: IV + padding
+encrypt_decrypt("CFB", DES.MODE_CFB)                        # CFB: IV, no padding
+encrypt_decrypt("OFB", DES.MODE_OFB)                        # OFB: IV, no padding
+
+
+3. In VS Code terminal, verify once whether python is there or not, by entering 
+i) python --version    (it should give output like this 'Python 3.13.3')
+
+	If it does not, press ctrl+shift+p   
+		- then type 'Python: Select Interpreter' and 
+		- choose 'Python 3.13.x (C:\Users\SMILE\AppData\Local\Programs\Python\Python313\python.exe)'  this path is just an example.
+		- close VS Code, and again open it, now it should work
+
+ii) Now enter this command in vs code terminal:
+pip install pycryptodome
+
+iii) Now run python file:
+python aes.py  
+
+if running des file then:
+python des.py
+
+
+Done
+
+--------------------------------------------------------------------------------------------------------------------------------
+🔸Problem Statement: Encrypt long messages using various modes of operation using AES or DES
+
+🔸Lab Outcomes:     #if performed aes, if you have performed des, then instead of aes write des, as for modes of operations its only this (ECB, CBC, CFB, OFB)
+
+Learn how to encrypt and decrypt messages using the AES encryption algorithm.        
+Understand the effect of different AES modes of operation (ECB, CBC, CFB, OFB, CTR).
+Demonstrate how encryption modes affect the ciphertext and its security.
+
+🔸Software Requirements:
+VS Code
+Python
+Python libraries: pycryptodome
+
+🔸Program:
+AES is a symmetric encryption algorithm used for securing data, with key sizes of 128, 192, or 256 bits. It is widely considered secure and is commonly used in modern encryption applications.
+
+###If performing DES then dont write above part of aes
+DES is an older symmetric encryption algorithm with a fixed 56-bit key. While it was widely used in the past, it is considered insecure today due to its small key size.
+
+###This mode of operation is same for both aes and des, but ctr is not applicable for des, so dont write ctr if you are performing des.
+
+Modes of Operation:
+- ECB(Electronic Codebook): Encrypts each block independently; vulnerable to patterns in ciphertext.
+- CBC(Cipher Block Chaining): Chains blocks with IV for varied ciphertexts.
+- CFB(Cipher Feedback): Encrypts small units with a shift register, behaving like a stream cipher.
+- OFB(Output Feedback): Uses encryption output for feedback, independent of plaintext.
+- CTR(Counter): Turns block cipher into a stream cipher using an incrementing counter.
+
+Algorithm:
+1. Encryption Process:
+	i. Select algorithm (AES or DES) and mode (e.g., ECB, CBC).
+	ii. Generate a random key and IV (or nonce for AES-CTR).
+	iii. Initialize the cipher with the key, mode, and IV/nonce.
+	iv. Encrypt the message (apply padding if needed).
+2. Decryption Process:
+	i. Use the same key and IV/nonce as encryption.
+	ii. Decrypt the ciphertext.
+	iii. Unpad if needed and verify the decrypted message
+
+- Write your program code here (aes/des)  if asked then only
+
+🔸Output: (Print)
+
+🔸Conclusion:
+###for aes
+In this experiment, encrypted and decrypted a long message using the AES encryption algorithm. Explored different AES modes and observed how each mode affects the encryption process and ciphertext. AES encryption ensures secure data transmission, with each mode offering different security features.
+
+###for des
+In this experiment, encrypted and decrypted a long message using the DES encryption algorithm. We explored different DES modes and observed how each mode affects the encryption process and ciphertext. DES encryption ensures secure data transmission, but AES is generally preferred for its security strength.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+### Viva Questions and Answers
+
+Q1: What is AES and DES?  
+A1: AES (Advanced Encryption Standard) is a symmetric encryption algorithm with key sizes of 128, 192, or 256 bits. It is widely used for secure data encryption.  
+DES (Data Encryption Standard) is an older symmetric encryption algorithm with a fixed 56-bit key, but it is considered insecure today due to its small key size.
+
+Q2: What are the different modes of operation in AES/DES?  
+A2: The modes are:  
+- ECB (Electronic Codebook): Encrypts each block independently.  
+- CBC (Cipher Block Chaining): Uses an IV to chain blocks together.  
+- CFB (Cipher Feedback): Encrypts small units of data, acting like a stream cipher.  
+- OFB (Output Feedback): Uses encryption output for feedback.  
+- CTR (Counter): Uses a counter to turn the block cipher into a stream cipher. (Not applicable to DES)
+
+Q3: What is the role of padding in AES and DES?  
+A3: Padding is used to ensure that the message length is a multiple of the block size. In AES and DES, padding is applied in modes like ECB and CBC to make the plaintext fit into complete blocks.
+
+Q4: What is the difference between ECB and CBC modes?  
+A4:  
+- ECB (Electronic Codebook): Each block is encrypted independently, which can reveal patterns in the ciphertext.  
+- CBC (Cipher Block Chaining): Each block is XORed with the previous block before encryption, making it more secure as identical plaintext blocks encrypt differently.
+
+Q5: What is the purpose of the Initialization Vector (IV)?  
+A5: The IV is used to introduce randomness into the encryption process, making it harder to predict the ciphertext. It is required in modes like CBC, CFB, and OFB.
+
+Q6: How does the CTR mode work?  
+A6: In CTR (Counter) mode, a counter is used and incremented for each block of data. It converts a block cipher into a stream cipher and does not require padding.
+
+Q7: Why is CTR mode not applicable to DES?  
+A7: CTR mode is not supported by DES because DES operates with a fixed key size and does not have the flexibility needed for a counter-based approach like AES.
+
+Q8: How do you ensure data integrity after decryption?  
+A8: After decryption, we check if the decrypted message matches the original plaintext. If they match, the decryption was successful, ensuring data integrity.
+
+Q9: How do you generate a key and IV for AES/DES?  
+A9: You can generate a random key and IV using `get_random_bytes()` from the `Crypto.Random` module, which provides a secure way to create cryptographic keys and IVs.
+
+Q10: What is the difference between AES and DES in terms of security?  
+A10: AES is considered more secure than DES due to its larger key sizes (128, 192, and 256 bits) compared to DES’s fixed 56-bit key, making AES more resistant to brute-force attacks.
+
+Q11: What happens if the key used for decryption is different from the one used for encryption?  
+A11: If the decryption key is different from the encryption key, the decryption will fail, and the result will be unreadable or incorrect data.
+
+Q12: Can the ciphertext be the same in different encryption modes?  
+A12: No, ciphertext will be different in different modes (e.g., ECB, CBC) even if the same message and key are used, due to the use of IV or chaining blocks in modes like CBC.
+
+Q13: Why is DES considered insecure nowadays?  
+A13: DES is considered insecure because its 56-bit key size is too small, making it vulnerable to brute-force attacks with modern computing power.
+
+Q14: What is the key size in AES and DES?  
+A14: AES supports key sizes of 128, 192, or 256 bits, while DES uses a fixed 56-bit key.
+
+Q15: Why is padding necessary in AES/DES?
+A15: Padding is necessary in AES and DES because these algorithms operate on fixed-size blocks (e.g., 128 bits for AES). If the plaintext isn't a multiple of the block size, padding ensures that the plaintext fits into complete blocks, allowing proper encryption and decryption without data loss.
+

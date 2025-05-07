@@ -1,0 +1,231 @@
+Exp 8
+Aim: Study of Network Security by:
+a. Setting up IPSec under Linux.
+b. Setting up Snort and studying the logs.
+c. Exploring the GPG tool to implement email security.
+
+Steps to perform:
+A. IPsec
+Install IPSec tools: 
+- sudo apt-get install strongswan
+2. Configure IPSec: 
+- sudo nano /etc/ipsec.conf
+In this file copy and paste the following content:
+conn my-secure-connection
+	auto=start
+	left=192.168.2.1    #replace with your local machine's IP (Kali VM)
+	right=192.168.1.36       #replace with your remote machine's IP (Windows IP)
+	authby=psk
+	ike=aes256-sha1-modp1024
+	esp=aes256-sha1
+	keyexchange=ikev2
+Save this file
+3. Enter command:
+- openssl rand -base64 32           (it will give output like this: UlNiwZ/r8AC+fdYA5l8p8aRd4WV+/IDcmUEAqN7TeC8=) copy it 
+
+4. Configure IPsec Secrets file:
+- sudo nano /etc/ipsec.secrets
+In this enter: 
+192.168.2.1 192.168.1.36 : PSK "UlNiwZ/r8AC+fdYA5l8p8aRd4WV+/IDcmUEAqN7TeC8="     (replace with your machine's ip address and value)
+
+5. Start the IPSec service:
+sudo systemctl restart strongswan
+sudo systemctl enable strongswan
+sudo ipsec status 
+
+6. Test the IPSec connection: 
+- ping <remote-IP>
+
+B. Snort
+1. Install Snort: 
+- sudo ap-get update
+- sudo apt-get install snort
+
+2. Configure Snort: 
+- sudo nano /etc/snort/snort.lua
+Change HOME_NET = 'any' to your kali vm ip:
+HOME_NET = "192.168.2.128"  (your kali Vm ip address)
+
+Just below this line -> include 'snort_defaults.lua'
+Copy and paste below content:
+ips = 
+{
+	rules = [[
+	  include /etc/snort/rules/local.rules
+	]]
+}
+
+
+And in 7. configure outputs, 
+copy and paste below content:
+
+outputs = 
+{
+	{
+		name = "alert_fast",
+		file = true,
+		filename = "/var/log/snort/alert_fast.txt",
+		limit = 1000000,
+	},
+}
+
+And ensure in 8th section configure tweaks, below code is there:
+if ( tweaks ~= nil ) then
+    include(tweaks .. '.lua')
+end
+
+3. Now configure rules file:
+- sudo nano /etc/snort/rules/local.rules
+In this file paste below code:
+alert icmp any any -> $HOME_NET any (msg:"ICMP test detected"; sid: 1000001; rev:1;)
+
+4. Enter these commands:
+sudo mkdir -p /var/log/snort
+sudo touch /var/log/snort/alert_fast.txt
+sudo chown $(whoami) /var/log/snort/alert_fast.txt
+
+5. Start Snort: 
+- sudo snort -c /etc/snort/snort.lua -R /etc/snort/rules/local.rules -i eth0 -A alert_fast -s 65535 -k none
+
+6. Now generate traffic using ping command, so for this open one more kali terminal and enter: 
+- ping 8.8.8.8
+
+Have patience, in the terminal that you have started snort, soon you will see messages like this 
+
+05/05-22:06:42.843848 [**] [1:1000001:1] "ICMP test detected" [**] [Priority: 0] {ICMP} 8.8.8.8 -> 192.168.2.128
+05/05-22:06:43.844450 [**] [1:1000001:1] "ICMP test detected" [**] [Priority: 0] {ICMP} 8.8.8.8 -> 192.168.2.128
+
+This indicates that snort is running successfully. Once generated enough traffic, stop ping command and snort by pressing ctrl+c
+
+C. GPG
+1. Install GPG: 
+- sudo apt-get install gnupg
+
+2. Generate a GPG key pair: 
+- gpg --gen-key
+It will ask you to enter name and email id, after that it will ask you to enter password
+
+3. Export your public key: 
+- gpg --armor --export <your-email@example.com>   #put your sakec email id
+
+4. Encrypt a message: 
+- echo "Hello, this is a secret message" | gpg --encrypt --armor -r <recipient-email@example.com>   #put someone else sakec email id
+
+5. Sign an email: 
+- echo "This is a signed message" | gpg --sign --armor > signed_mesage.asc
+
+6. Verify an email signature: 
+- gpg --verify signed_message.asc
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+🔸Problem Statement: 
+Study of Network Security by:
+a. Setting up IPSec under Linux.
+b. Setting up Snort and studying the logs.
+c. Exploring the GPG tool to implement email security.
+
+🔸Lab Objective:
+- Set up IPSec in Linux to create secure communication channels between systems.
+- Install and configure Snort for network intrusion detection and prevention.
+- Study Snort logs to understand network traffic and detect security threats.
+- Explore and use the GPG tool to secure email communication by encrypting and signing messages.
+
+🔸Software Requirements:
+- Linux Distribution: Any Linux-based OS (e.g., Ubuntu, CentOS, Debian).
+- IPSec Tools: strongSwan or Openswan for setting up IPSec.
+- Snort: Network intrusion detection software.
+- GPG: GNU Privacy Guard tool for encrypting and signing emails.
+- Text Editor: To edit configuration files (e.g., Nano, Vim).
+
+🔸Program:
+🔹 IPSec – Internet Protocol Security
+IPSec is a framework used to secure IP communications by authenticating and encrypting each IP packet in a session. It ensures CIA triad of the data transmitted over a network. Commonly used in VPNs and secure tunneling.
+Commands:
+sudo apt-get install strongswan
+sudo nano /etc/ipsec.conf       # Add IPsec config
+openssl rand -base64 32         # Generate PSK
+sudo nano /etc/ipsec.secrets    # Add PSK with IPs
+sudo systemctl restart strongswan
+sudo systemctl enable strongswan
+sudo ipsec status
+ping <remote-IP>
+
+🔹 Snort – Intrusion Detection System (IDS)
+Open-source tool for real-time traffic analysis and attack detection. Detects threats like buffer overflows, port scans, etc.
+Commands:
+sudo apt-get update
+sudo apt-get install snort
+sudo nano /etc/snort/snort.lua         # Set HOME_NET and add rules/output config
+sudo nano /etc/snort/rules/local.rules # Add ICMP rule
+sudo mkdir -p /var/log/snort
+sudo touch /var/log/snort/alert_fast.txt
+sudo chown $(whoami) /var/log/snort/alert_fast.txt
+sudo snort -c /etc/snort/snort.lua -R /etc/snort/rules/local.rules -i eth0 -A alert_fast -s 65535 -k none
+ping 8.8.8.8                            # From another terminal to generate traffic
+
+🔹 GPG (GNU Privacy Guard)
+Used for encrypting and signing data (mainly emails). Ensures only the intended recipient can read the message. Confirms the sender's identity and message integrity.
+Commands:
+sudo apt-get install gnupg
+gpg --gen-key
+gpg --armor --export <your-email@example.com>
+echo "Hello, this is a secret message" | gpg --encrypt --armor -r <recipient-email@example.com>
+echo "This is a signed message" | gpg --sign --armor > signed_message.asc
+gpg --verify signed_message.asc
+
+🔸Output: (Print)
+
+🔸Conclusion:
+In this experiment, understood how IPsec is used to create secure channels between systems. Configured snort tool for network intrusion detection and prevention. Also, performed gpg tool to secure email communication by encrypting and signing messages.  
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+### Viva Questions and Answers
+
+Q1: What is IPSec and why is it used?  
+A1: IPSec (Internet Protocol Security) is a framework used to secure IP communications by authenticating and encrypting each IP packet in a session. It ensures confidentiality, integrity, and authenticity, often used in VPNs.
+
+Q2: What is the purpose of the PSK in IPSec configuration?  
+A2: PSK (Pre-Shared Key) is used as a shared secret between the communicating systems for mutual authentication and establishing secure connections.
+
+Q3: What is the role of `ipsec.conf` file in IPSec configuration?  
+A3: The `ipsec.conf` file contains the connection configuration for IPSec, specifying parameters like authentication method, encryption algorithms, IP addresses, and the key exchange protocol.
+
+Q4: How do you check the status of IPSec connection?  
+A4: You can check the status of IPSec by using the command `sudo ipsec status`, which displays the current status of active IPSec connections.
+
+Q5: What is Snort and how is it used?  
+A5: Snort is an open-source Intrusion Detection System (IDS) used for monitoring network traffic and detecting malicious activity. It can analyze real-time traffic, detect attacks, and generate alerts.
+
+Q6: How do you configure Snort for network traffic analysis?  
+A6: Snort can be configured by editing the `snort.lua` file to set the network variables and rules. Additionally, rules for specific traffic like ICMP can be added in `local.rules` to detect threats.
+
+Q7: What is the purpose of the `alert_fast` output in Snort configuration?  
+A7: The `alert_fast` output configuration in Snort is used to log detected alerts quickly to a file (`/var/log/snort/alert_fast.txt`), making it easier to monitor potential threats in real-time.
+
+Q8: How do you generate traffic to test Snort?  
+A8: You can generate traffic by using the `ping` command from another terminal. This will create network activity that Snort can detect and log if it matches configured rules.
+
+Q9: What is GPG and how is it used in email security?  
+A9: GPG (GNU Privacy Guard) is a tool used for encrypting and signing emails to ensure their confidentiality, integrity, and authenticity. It uses public-key cryptography for encryption and signing.
+
+Q10: How do you generate a GPG key pair?  
+A10: You can generate a GPG key pair using the command `gpg --gen-key`. It will prompt you to enter your name, email, and passphrase.
+
+Q11: What is the purpose of exporting the public key in GPG?  
+A11: Exporting the public key allows others to encrypt messages to you or verify your signed messages. It can be shared through email or other means.
+
+Q12: How do you encrypt a message using GPG?  
+A12: You can encrypt a message by using the command `echo "message" | gpg --encrypt --armor -r <recipient-email>`. This encrypts the message for the specified recipient.
+
+Q13: What does signing a message with GPG do?  
+A13: Signing a message with GPG proves that the message was sent by the owner of the private key and ensures that the message has not been tampered with during transmission.
+
+Q14: How do you verify a signed message in GPG?  
+A14: To verify a signed message, use the command `gpg --verify <signed-message.asc>`. It checks the authenticity of the signature and confirms that the message has not been altered.
+
+Q15: What is the significance of the `--armor` option in GPG?  
+A15: The `--armor` option is used to output the encrypted or signed message in ASCII format, making it easier to share in text-based systems like emails.
+
+
